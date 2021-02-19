@@ -34,7 +34,7 @@ Future<Register> createUser(String fname,String lname,String mail,String pas,Str
 
 }
 
-String man;
+
 
 
 class _RegistrationPageState extends State<RegistrationPage> {
