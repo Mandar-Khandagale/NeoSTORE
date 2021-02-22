@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:neostore/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -91,7 +92,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       });
                     },
                     color: Colors.white,
-                    child: Text('Register',
+                    child: Text('REGISTER',
                       style: TextStyle(fontSize: 26.0, color: Colors.red),)),
               ),
             ],
@@ -278,7 +279,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(top:23.0,bottom: 23.0),
+              padding: const EdgeInsets.only(top:23.0,bottom:13.0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -312,40 +313,38 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             isValidateForm1 && gender == null ? Text('Required', style: TextStyle(color: Colors.green,fontSize: 12.0),) : Container(),
             SizedBox(height: 10.0,),
-            Padding(
-              padding: const EdgeInsets.only(top: 23.0),
-              child: TextFormField(
-                controller: phone,
-                style: TextStyle(color: Colors.white),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.phone_android, color: Colors.white,),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green[500]),),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white,),),
-                    hintText: 'Phone Number ',
-                    hintStyle: TextStyle(fontSize:18,color: Colors.white),
-                  errorStyle: TextStyle(color: Colors.green),
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Required';
-                  } else if (!RegExp(r"^[0-9,.\-]+$").hasMatch(value)) {
-                    return 'Only Numbers';
-                  } else {
-                    return null;
-                  }
-                },
+            TextFormField(
+              controller: phone,
+              style: TextStyle(color: Colors.white),
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.phone_android, color: Colors.white,),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green[500]),),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white,),),
+                  hintText: 'Phone Number ',
+                  hintStyle: TextStyle(fontSize:18,color: Colors.white),
+                errorStyle: TextStyle(color: Colors.green),
               ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Required';
+                } else if (!RegExp(r"^[0-9,.\-]+$").hasMatch(value)) {
+                  return 'Only Numbers';
+                } else {
+                  return null;
+                }
+              },
             ),
+            // SizedBox(height: 15.0,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Radio(
-                    activeColor: Colors.green[700],
+                    activeColor: Colors.white,
                     value: 'checked',
                     groupValue: status,
                     onChanged: (val) {
@@ -362,7 +361,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       TextSpan(
                         text: "Terms & Condition",
                         style: TextStyle(fontSize: 15.0,color: Colors.white,decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                        ..onTap = (){
 
+                        }
                       ),
                     ]
                   ),
@@ -370,7 +372,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ],
               ),
             ),
-            status1 && status == null ? Text('Required', style: TextStyle(color: Colors.green,fontSize: 12.0),) :    SizedBox(),
+            status1 && status == null ? Text('Required', style: TextStyle(color: Colors.green,fontSize: 12.0),) : Container(),
             SizedBox(height: 10.0,),
           ],
         ),
