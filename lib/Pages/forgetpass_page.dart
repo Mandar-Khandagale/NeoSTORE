@@ -10,19 +10,7 @@ class ForgetPass extends StatefulWidget {
 }
 
 
-Future<Forget> forgetPass(String email) async {
-  final String apiUrl = 'http://staging.php-dev.in:8844/trainingapp/api/users/forgot';
-  final response = await http.post(apiUrl, body: {
-    'email' : email,
-  });
-  if(response.statusCode == 200){
-    final String repo = response.body;
-    return forgetFromJson(repo);
-  }else{
-    print('Forget pass ${response.statusCode}');
-    return null;
-  }
-}
+
 
 
 
@@ -87,15 +75,23 @@ class _ForgetPassState extends State<ForgetPass> {
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(color: Colors.white)),
                       onPressed: () async {
-                        setState(()  {
                           if(forgetKey.currentState.validate()){
                             final String email = userName.text;
+                            Future forgetPass(String email) async {
+                              final String apiUrl = 'http://staging.php-dev.in:8844/trainingapp/api/users/forgot';
+                              final response = await http.post(apiUrl, body: {
+                                'email' : email,
+                              });
+                              if(response.statusCode == 200){
+                                print('Forget pass success ${response.statusCode}');
+                                Navigator.of(context).pop();
+                              }else{
+                                print('Forget pass ${response.statusCode}');
+                                return null;
+                              }
+                            }
                              forgetPass(email);
-                             Navigator.of(context).pop();
-                          }else {
-                            print("Password not changed");
                           }
-                        });
                       },
                       color: Colors.white,
                       child: Text('SUBMIT',

@@ -26,7 +26,7 @@ Future<Register> createUser(String fname,String lname,String mail,String pas,Str
 
   if(response.statusCode == 200){
     final String respo = response.body;
-
+    print("Status Code:- ${response.statusCode}");
     return registerFromJson(respo);
   }else{
     print('Error${response.statusCode}');
@@ -103,18 +103,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
 
-  void addData() async{
+  void addData() async {
     isValidateForm1 = true;
     status1 = true;
     if(_formKey.currentState.validate()){
       if(gender != null && status !=null) {
-
         final String fname = fName.text;
         final String lname = lName.text; final String mail = email.text;final String pas = pass.text;
         final String  conpass = conPass.text; final String gen = gender;  final String num = phone.text;
 
-        final Register reg = await createUser(fname, lname, mail, pas, conpass, gen, num);
-        print('Post value:- ${reg.firstName}');
+        final Register data = await createUser(fname, lname, mail, pas, conpass, gen, num);
 
       }
     }else{
@@ -236,7 +234,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Please Enter Password';
-                } else {
+                }else if(value.length < 6){
+                  return 'Password should be greater than 6 characters';
+                }
+                else {
                   return null;
                 }
               },
@@ -270,8 +271,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 if (value.isEmpty) {
                   return 'Please re-enter Password';
                 }
-                //print('Validation ${pass.text}');
-                //print('Confirm ${conPass.text}');
                 if(pass.text != conPass.text) {
                   return 'Password does not match';
                 }
@@ -287,7 +286,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       style: TextStyle(fontSize: 16.0, color: Colors.white),),
                     Radio(
                       activeColor: Colors.white,
-                      value: 'Male',
+                      value: 'M',
                       groupValue: gender,
                       onChanged: (val) {
                         setState(() {
@@ -299,7 +298,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       style: TextStyle(fontSize: 16.0, color: Colors.white),),
                     Radio(
                       activeColor: Colors.white,
-                      value: 'Female',
+                      value: 'F',
                       groupValue: gender,
                       onChanged: (val) {
                         setState(() {
@@ -315,6 +314,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             SizedBox(height: 10.0,),
             TextFormField(
               controller: phone,
+              maxLength: 10,
               style: TextStyle(color: Colors.white),
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -332,7 +332,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   return 'Required';
                 } else if (!RegExp(r"^[0-9,.\-]+$").hasMatch(value)) {
                   return 'Only Numbers';
-                } else {
+                }else if (value.length < 10){
+                  return 'Enter Valid Number';
+                }else {
                   return null;
                 }
               },

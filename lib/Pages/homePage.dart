@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:neostore/Pages/loginPage.dart';
+import 'package:neostore/user_model.dart';
 
 Color myRed1 = Color(0xffe91c1a);
 Color black = Color(0xff7f7f7f);
@@ -9,6 +13,9 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +41,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children :[
           UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(),
-                accountName: Text('Mandar Khandagale'),
-                accountEmail: Text('mmk08101998@gmail.com'),
+                accountName: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Mandar Khandagale',style: TextStyle(fontSize: 23.0),),
+                  ],
+                ),
+                accountEmail: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('mmk08101998@gmail.com',style: TextStyle(fontSize: 13.0),),
+                  ],
+                ),
               ),
             ListTile(
               title: Text("My Cart",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.bold),),
@@ -79,6 +96,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
             ListTile(
               title: Text("Logout",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.bold),),
               leading: Icon(Icons.logout,color: Colors.white,size: 28.0,),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
+              },
             ),
             Divider(thickness: 1.0,),
     ]

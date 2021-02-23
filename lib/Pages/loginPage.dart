@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:neostore/Pages/forgetpass_page.dart';
@@ -7,32 +9,19 @@ import '../user_model.dart';
 import 'package:http/http.dart' as http;
 Color myRed1 = Color(0xffe91c1a);
 
+
+
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-Future<Login> userValidate(String user, String pass) async {
-  final String apiUrl = "http://staging.php-dev.in:8844/trainingapp/api/users/login";
-  final response = await http.post(apiUrl, body: {
-    "email": user,
-    "password": pass
-  });
-
-  if(response.statusCode == 200){
-    final String respo = response.body;
-    return loginFromJson(respo);
-  }else {
-    print('Login ${response.statusCode}');
-    return null;
-  }
-}
-
-
 
 
 
 class _LoginPageState extends State<LoginPage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final _loginKey = GlobalKey<FormState>();
   bool showPass0 = true;
   TextEditingController passUser = TextEditingController();
@@ -43,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.red,
       body: Center(
         child: Padding(
@@ -64,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextFormField(
                     controller: userName,
                     style: TextStyle(color: Colors.white),
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person, color: Colors.white,),
                       focusedBorder: OutlineInputBorder(
@@ -179,14 +169,38 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   login() async {
+    final String user = userName.text; final String pass = passUser.text;
     if(_loginKey.currentState.validate()){
-     final String user = userName.text; final String pass = passUser.text;
-     final Login log = await userValidate(user, pass);
-     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePageScreen()));
-     print("Post Login value ${log.email}");
-      } else{
-      print('Login Unsuccessful');
-    }
+     Future userValidate(String user, String pass) async {
+       final String apiUrl = "http://staging.php-dev.in:8844/trainingapp/api/users/login";
+       final response = await http.post(apiUrl,
+           body: {
+             "email": user,
+             "password": pass
+           });
+
+       if(response.statusCode == 200){
+         print('Login Successful ${response.statusCode}');
+         print(user);
+         var success = SuccessModel.fromJson(jsonDecode(response.body));
+         scaffoldKey.currentState.showSnackBar(SnackBar(
+           content: Text(success.userMsg),
+           duration: Duration(seconds:5),
+         ));
+       // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePageScreen()));
+       } if (response.statusCode == 401){
+         var error = ErrorModel.fromJson(jsonDecode(response.body));
+         scaffoldKey.currentState.showSnackBar(SnackBar(
+           content: Text(error.userMsg),
+           duration: Duration(seconds:5),
+         ));
+         print(user);
+         print('Login ${response.statusCode}');
+         return null;
+       }
+     }
+     userValidate(user, pass);
+      }
   }
 
 

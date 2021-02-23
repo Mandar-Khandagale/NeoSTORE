@@ -83,3 +83,47 @@ class Forget {
     "email": email,
   };
 }
+
+
+
+///Error Model
+class ErrorModel {
+  ErrorModel({
+    this.message,
+    this.userMsg,
+  });
+
+  String message;
+  String userMsg;
+
+  factory ErrorModel.fromJson(Map<String, dynamic> json) => ErrorModel(
+    message: json[" message"],
+    userMsg: json["user_msg"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    " message": message,
+    "user_msg": userMsg,
+  };
+}
+
+///Success Model
+class SuccessModel {
+  SuccessModel({
+    this.message,
+    this.userMsg,
+  });
+
+  String message;
+  String userMsg;
+
+  factory SuccessModel.fromJson(Map<String, dynamic> json) => SuccessModel(
+    message: json["message"],
+    userMsg: json["user_msg"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "message": message,
+    "user_msg": userMsg,
+  };
+}
