@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:neostore/Pages/loginPage.dart';
-import 'package:neostore/user_model.dart';
 
 Color myRed1 = Color(0xffe91c1a);
 Color black = Color(0xff7f7f7f);
@@ -31,6 +28,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
       drawer: Drawer(
         child: drawer(),
       ),
+      body:Column(
+        children: [
+          Container(
+            height: 228.0,
+            color: Colors.green,
+          ),
+        ],
+      ),
     );
   }
 
@@ -39,22 +44,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
       color: black,
       child: ListView(
         children :[
-          UserAccountsDrawerHeader(
-                currentAccountPicture: CircleAvatar(),
-                accountName: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Mandar Khandagale',style: TextStyle(fontSize: 23.0),),
-                  ],
-                ),
-                accountEmail: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('mmk08101998@gmail.com',style: TextStyle(fontSize: 13.0),),
-                  ],
-                ),
+        Container(
+          child: Column(
+            children: [
+              SizedBox(height: 35.0,),
+              SizedBox(
+                height: 83.0,
+                width: 83.0,
+                child: CircleAvatar(),
               ),
-            ListTile(
+              SizedBox(height: 18.0,),
+              Text('Mandar Khandagale',style: TextStyle(fontSize: 23.0,color: Colors.white),),
+              SizedBox(height: 13.0,),
+              Text('mandarkhandagale08@gmail.com',style: TextStyle(color: Colors.white,fontSize: 13.0,letterSpacing: 1.1),),
+              SizedBox(height: 13.0,),
+            ],
+          ),
+        ),
+          Divider(thickness: 1.0,),
+        ListTile(
               title: Text("My Cart",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.bold),),
               leading: Icon(Icons.shopping_cart,color: Colors.white,size: 28.0,),
             ),
@@ -105,6 +113,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
     ),
     );
   }
+
+
 }
 
 

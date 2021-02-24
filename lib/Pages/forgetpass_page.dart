@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:neostore/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +18,7 @@ class ForgetPass extends StatefulWidget {
 
 class _ForgetPassState extends State<ForgetPass> {
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final forgetKey = GlobalKey<FormState>();
   TextEditingController userName = TextEditingController();
   
@@ -23,7 +26,12 @@ class _ForgetPassState extends State<ForgetPass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
+          Navigator.pop(context);
+        },),
         backgroundColor: myRed1,
         title: Text('Forget Password?'),
         centerTitle: true,
@@ -51,6 +59,10 @@ class _ForgetPassState extends State<ForgetPass> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.green[500]),),
                     enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white,),),
+                    errorBorder:OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white,),),
+                    focusedErrorBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white,),),
                     hintText: 'Email Address',
                     hintStyle: TextStyle(color: Colors.white,fontSize: 18.0),
@@ -82,12 +94,31 @@ class _ForgetPassState extends State<ForgetPass> {
                               final response = await http.post(apiUrl, body: {
                                 'email' : email,
                               });
+                              final success = ForgetSuccess.fromJson(jsonDecode(response.body));
+                              final error = ForgetError.fromJson(jsonDecode(response.body));
                               if(response.statusCode == 200){
                                 print('Forget pass success ${response.statusCode}');
-                                Navigator.of(context).pop();
-                              }else{
+                                scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text(success.userMsg),
+                                  duration: Duration(seconds: 5),
+                                  action: SnackBarAction(label: "Ok", onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },),
+                                ));
+                              }else if(response.statusCode == 401){
                                 print('Forget pass ${response.statusCode}');
-                                return null;
+                                print('Forget pass success ${response.statusCode}');
+                                scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text(error.userMsg),
+                                  duration: Duration(seconds: 5),
+                                ));
+                              }
+                              else {
+                                scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text(success.userMsg),
+                                  duration: Duration(seconds: 5),
+                                ));
+
                               }
                             }
                              forgetPass(email);
