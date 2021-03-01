@@ -3,11 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:neostore/Bloc/login_bloc.dart';
 import 'package:neostore/Pages/forgetpass_page.dart';
 import 'package:neostore/Pages/homePage.dart';
 import 'package:neostore/Pages/registrationPage.dart';
-import '../user_model.dart';
-import 'package:http/http.dart' as http;
+
 Color myRed1 = Color(0xffe91c1a);
 
 
@@ -26,15 +27,25 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passUser = TextEditingController();
   TextEditingController userName = TextEditingController();
 
+  final loginObj = LoginBloc();
+
+  @override
+  void dispose() {
+    loginObj.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.red,
-      body: Stack(
-        children:[
-          SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: Container(
+           height: double.infinity,
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
@@ -67,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                                borderSide: BorderSide(color: Colors.white,),),
                              hintText: 'Username',
                              hintStyle: TextStyle(color: Colors.white,fontSize: 18.0),
-                             errorStyle: TextStyle(color: Colors.green),
+                             errorStyle: TextStyle(color: Colors.white),
                            ),
                            validator: (value) {
                              if (value.isEmpty) {
@@ -107,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                                borderSide: BorderSide(color: Colors.white,),),
                              hintText: 'Password',
                              hintStyle: TextStyle(color: Colors.white,fontSize: 18.0),
-                             errorStyle: TextStyle(color: Colors.green),
+                             errorStyle: TextStyle(color: Colors.white),
                            ),
                            validator: (value) {
                              if (value.isEmpty) {
@@ -152,13 +163,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(15, 210, 15, 0),
+                  padding: EdgeInsets.fromLTRB(13, 210, 13, 0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("DONT HAVE AN ACCOUNT?",style: TextStyle(color: Colors.white,fontSize:16.0,fontWeight: FontWeight.bold),),
-                      SizedBox(width: 60.0,),
+                      //SizedBox(width: 60.0,),
                       Container(
                         color: myRed1,
                         height: 46.0,width: 46.0,
@@ -171,52 +181,37 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
+                StreamBuilder<String>(
+                    stream: loginObj.loginStream,
+                    builder: (BuildContext context, snapshot ){
+                      if(snapshot.data != null){
+                        Fluttertoast.showToast(
+                            msg: snapshot.data,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black);
+                        if(loginObj.responseStatus == 200){
+                          Future.delayed(Duration(seconds: 2), (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePageScreen()));
+                          });
+                        }
+                      }
+                      return Container();
+                    }
+                ),
               ],
             ),
           ),
-    ]
+        ),
       ),
     );
   }
 
   login() async {
-    final String user = userName.text; final String pass = passUser.text;
     if(_loginKey.currentState.validate()) {
-      Future userValidate(String user, String pass) async {
-        final String apiUrl = "http://staging.php-dev.in:8844/trainingapp/api/users/login";
-        final response = await http.post(apiUrl,
-            body: {
-              "email": user,
-              "password": pass
-            });
-        final error = ErrorModel.fromJson(jsonDecode(response.body));
-        if (response.statusCode == 200) {
-          print('Login Successful ${response.statusCode}');
-          print(user);
-          final success = SuccessModel.fromJson(jsonDecode(response.body));
-          scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text(success.userMsg),
-            duration: Duration(seconds: 5),
-            action: SnackBarAction(label: 'Ok', onPressed:(){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePageScreen()));
-            })
-          ));
-        } else if (response.statusCode == 401){
-          print("error ${error.userMsg}");
-          scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text(error.userMsg),
-            duration: Duration(seconds:5),
-          ));
-          print(user);
-          print('Login ${response.statusCode}');
-        }else {
-          scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text(error.userMsg),
-            duration: Duration(seconds: 5),
-          ));
-        }
-      }
-      userValidate(user, pass);
+      final String user = userName.text; final String pass = passUser.text;
+      loginObj.userValidate(user, pass);
       }
   }
 

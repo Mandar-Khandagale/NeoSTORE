@@ -105,7 +105,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
               title: Text("Logout",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.bold),),
               leading: Icon(Icons.logout,color: Colors.white,size: 28.0,),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             ),
             Divider(thickness: 1.0,),

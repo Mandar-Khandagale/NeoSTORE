@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:neostore/Pages/loginPage.dart';
-import 'package:neostore/Pages/registrationPage.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+// void main() => runApp(
+//   DevicePreview(
+//     builder: (context) => MyApp(), // Wrap your app
+//   ),
+// );
 
 class MyApp extends StatelessWidget {
 
