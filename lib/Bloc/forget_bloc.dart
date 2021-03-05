@@ -17,8 +17,8 @@ class ForgetBloc {
         final response = await http.post(apiUrl, body: {
           'email' : email,
         });
-        final success = ForgetSuccess.fromJson(jsonDecode(response.body));
-        final error = ForgetError.fromJson(jsonDecode(response.body));
+        final success = SuccessModel.fromJson(jsonDecode(response.body));
+        final error = ErrorModel.fromJson(jsonDecode(response.body));
         if(response.statusCode == 200){
           responseStatus = response.statusCode;
           print('Forget pass success ${response.statusCode}');

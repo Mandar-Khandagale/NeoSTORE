@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:neostore/Pages/account_details.dart';
+import 'package:neostore/Pages/homePage.dart';
 import 'package:neostore/Pages/loginPage.dart';
-import 'package:device_preview/device_preview.dart';
+
 
 void main() {
   runApp(MyApp());

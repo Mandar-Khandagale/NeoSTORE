@@ -1,168 +1,146 @@
 import 'dart:convert';
 
-// ///Registration Model
-// Register registerFromJson(String str) => Register.fromJson(json.decode(str));
-// String registerToJson(Register data) => json.encode(data.toJson());
-//
-// class Register {
-//   Register({
-//     this.firstName,
-//     this.lastName,
-//     this.email,
-//     this.password,
-//     this.confirmPassword,
-//     this.gender,
-//     this.phoneNo,
-//   });
-//
-//   String firstName;
-//   String lastName;
-//   String email;
-//   String password;
-//   String confirmPassword;
-//   String gender;
-//   String phoneNo;
-//
-//   factory Register.fromJson(Map<String, dynamic> json) => Register(
-//     firstName: json["first_name"],
-//     lastName: json["last_name"],
-//     email: json["email"],
-//     password: json["password"],
-//     confirmPassword: json["confirm_password"],
-//     gender: json["gender"],
-//     phoneNo: json["phone_no"],
-//   );
-//
-//   Map<String, dynamic> toJson() => {
-//     "first_name": firstName,
-//     "last_name": lastName,
-//     "email": email,
-//     "password": password,
-//     "confirm_password": confirmPassword,
-//     "gender": gender,
-//     "phone_no": phoneNo,
-//   };
-// }
-
-
-// ///Login Model:-
-// Login loginFromJson(String str) => Login.fromJson(json.decode(str));
-// String loginToJson(Login data) => json.encode(data.toJson());
-//
-// class Login {
-//   Login({
-//     this.email,
-//     this.password,
-//   });
-//
-//   String email;
-//   String password;
-//
-//   factory Login.fromJson(Map<String, dynamic> json) => Login(
-//     email: json["email"],
-//     password: json["password"],
-//   );
-//
-//   Map<String, dynamic> toJson() => {
-//     "email": email,
-//     "password": password,
-//   };
-// }
-
-///Forget Model:-
-Forget forgetFromJson(String str) => Forget.fromJson(json.decode(str));
-String forgetToJson(Forget data) => json.encode(data.toJson());
-class Forget {
-  Forget({
-    this.email,
-  });
-  String email;
-  factory Forget.fromJson(Map<String, dynamic> json) => Forget(
-    email: json["email"],
-  );
-  Map<String, dynamic> toJson() => {
-    "email": email,
-  };
-}
-
-
-///Register Success Model
-class RegisterSuccess {
-  RegisterSuccess({
-    this.message,
-    this.userMsg,
-  });
-
+///Response Model
+class SuccessModel {
+  int status;
+  UserData data;
   String message;
   String userMsg;
 
-  factory RegisterSuccess.fromJson(Map<String, dynamic> json) => RegisterSuccess(
-    message: json["message"],
-    userMsg: json["user_msg"],
-  );
+  SuccessModel({this.status, this.data, this.message, this.userMsg});
 
-  Map<String, dynamic> toJson() => {
-    "message": message,
-    "user_msg": userMsg,
-  };
+  SuccessModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    data = json['data'] != null ? new UserData.fromJson(json['data']) : null;
+    message = json['message'];
+    userMsg = json['user_msg'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
+    }
+    data['message'] = this.message;
+    data['user_msg'] = this.userMsg;
+    return data;
+  }
 }
 
-///Register Error Model
-class RegisterError {
-  RegisterError({
-    this.data,
-    this.message,
-    this.userMsg,
-  });
-
-  Data data;
-  String message;
-  String userMsg;
-
-  factory RegisterError.fromJson(Map<String, dynamic> json) => RegisterError(
-    data: Data.fromJson(json["data"]),
-    message: json["message"],
-    userMsg: json["user_msg"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-    "message": message,
-    "user_msg": userMsg,
-  };
-}
-
-class Data {
-  Data({
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.gender,
-    this.phoneNo,
-  });
-
+class UserData {
+  int id;
+  int roleId;
   String firstName;
   String lastName;
   String email;
+  String username;
+  String profilePic;
+  String countryId;
   String gender;
-  int phoneNo;
+  String phoneNo;
+  String dob;
+  bool isActive;
+  String created;
+  String modified;
+  String accessToken;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    firstName: json[" first_name"],
-    lastName: json[" last_name"],
-    email: json["email"],
-    gender: json["gender"],
-    phoneNo: json[" phone_no"],
+  UserData(
+      {this.id,
+        this.roleId,
+        this.firstName,
+        this.lastName,
+        this.email,
+        this.username,
+        this.profilePic,
+        this.countryId,
+        this.gender,
+        this.phoneNo,
+        this.dob,
+        this.isActive,
+        this.created,
+        this.modified,
+        this.accessToken});
+
+  static Map<String, dynamic> toMap(UserData data) {
+    return {'id': data.id, 'roleID': data.roleId, 'firstName': data.firstName, 'lastName': data.lastName,' email': data.email, 'username': data.username,
+      'profilePic': data.profilePic,  'countryId': data.countryId, 'gender': data.gender, 'phoneNo': data.phoneNo,'dob': data.dob, 'isActive': data.isActive,
+      'created': data.created,'modified': data.modified,'accessToken': data.accessToken};
+  }
+
+
+
+
+  UserData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    roleId = json['role_id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    email = json['email'];
+    username = json['username'];
+    profilePic = json['profile_pic'];
+    countryId = json['country_id'];
+    gender = json['gender'];
+    phoneNo = json['phone_no'];
+    dob = json['dob'];
+    isActive = json['is_active'];
+    created = json['created'];
+    modified = json['modified'];
+    accessToken = json['access_token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['role_id'] = this.roleId;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
+    data['email'] = this.email;
+    data['username'] = this.username;
+    data['profile_pic'] = this.profilePic;
+    data['country_id'] = this.countryId;
+    data['gender'] = this.gender;
+    data['phone_no'] = this.phoneNo;
+    data['dob'] = this.dob;
+    data['is_active'] = this.isActive;
+    data['created'] = this.created;
+    data['modified'] = this.modified;
+    data['access_token'] = this.accessToken;
+    return data;
+  }
+
+  static String encode(List<UserData> user) => json.encode(
+    user.map<Map<String, dynamic>>((value) => UserData.toMap(value)).toList(),
   );
 
-  Map<String, dynamic> toJson() => {
-    " first_name": firstName,
-    " last_name": lastName,
-    "email": email,
-    "gender": gender,
-    " phone_no": phoneNo,
-  };
+  static List<UserData> decode(String users) =>
+      (json.decode(users) as List<dynamic>).map<UserData>((item) => UserData.fromJson(item)).toList();
+
 }
+
+
+
+
+// ///Success Model
+// class SuccessModel {
+//   SuccessModel({
+//     this.message,
+//     this.userMsg,
+//   });
+//
+//   String message;
+//   String userMsg;
+//
+//   factory SuccessModel.fromJson(Map<String, dynamic> json) => SuccessModel(
+//     message: json["message"],
+//     userMsg: json["user_msg"],
+//   );
+//
+//   Map<String, dynamic> toJson() => {
+//     "message": message,
+//     "user_msg": userMsg,
+//   };
+// }
 
 
 
@@ -188,67 +166,7 @@ class ErrorModel {
   };
 }
 
-///Login Success Model
-class SuccessModel {
-  SuccessModel({
-    this.message,
-    this.userMsg,
-  });
-
-  String message;
-  String userMsg;
-
-  factory SuccessModel.fromJson(Map<String, dynamic> json) => SuccessModel(
-    message: json["message"],
-    userMsg: json["user_msg"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "message": message,
-    "user_msg": userMsg,
-  };
-}
 
 
-///Forget Success Model
-class ForgetSuccess {
-  ForgetSuccess({
-    this.message,
-    this.userMsg,
-  });
-
-  String message;
-  String userMsg;
-
-  factory ForgetSuccess.fromJson(Map<String, dynamic> json) => ForgetSuccess(
-    message: json["message"],
-    userMsg: json["user_msg"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "message": message,
-    "user_msg": userMsg,
-  };
-}
 
 
-///Forget Error Model
-class ForgetError {
-  ForgetError({
-    this.message,
-    this.userMsg,
-  });
-
-  String message;
-  String userMsg;
-
-  factory ForgetError.fromJson(Map<String, dynamic> json) => ForgetError(
-    message: json["message"],
-    userMsg: json["user_msg"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "message": message,
-    "user_msg": userMsg,
-  };
-}

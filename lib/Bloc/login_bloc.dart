@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:neostore/user_model.dart';
 
@@ -19,25 +20,34 @@ class LoginBloc {
           "email": user,
           "password": pass
         });
-    final success = SuccessModel.fromJson(jsonDecode(response.body));
-    final error = ErrorModel.fromJson(jsonDecode(response.body));
+    print("mandar:-${response.body}");
+
+
     if (response.statusCode == 200) {
+      final success = SuccessModel.fromJson(jsonDecode(response.body));
       responseStatus = response.statusCode;
       print('Login Successful ${response.statusCode}');
-      print(user);
+      print("fname= ${success.data.firstName}");
+        SharedPreferences perf = await SharedPreferences.getInstance();
+        perf.setString("key1", success.data.firstName);
+        perf.setString("key2", success.data.lastName);
+        perf.setString("key3", success.data.email);
+        perf.setString("key4", success.data.accessToken);
+        perf.setString("key5", success.data.phoneNo);
+        perf.setString("key6", success.data.dob);
       loginSink.add(success.userMsg);
     } else if (response.statusCode == 401){
+       final error = ErrorModel.fromJson(jsonDecode(response.body));
       responseStatus = response.statusCode;
       print('Login error ${response.statusCode}');
       loginSink.add(error.userMsg);
     }else {
+       final error = ErrorModel.fromJson(jsonDecode(response.body));
       responseStatus = response.statusCode;
       print('Login error ${response.statusCode}');
       loginSink.add(error.userMsg);
     }
   }
-
-
 
 void dispose(){
   stateStreamController.close();

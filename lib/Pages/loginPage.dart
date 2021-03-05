@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,9 @@ import 'package:neostore/Bloc/login_bloc.dart';
 import 'package:neostore/Pages/forgetpass_page.dart';
 import 'package:neostore/Pages/homePage.dart';
 import 'package:neostore/Pages/registrationPage.dart';
+import 'package:neostore/constants.dart';
 
-Color myRed1 = Color(0xffe91c1a);
+
 
 
 class LoginPage extends StatefulWidget {
@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _loginKey = GlobalKey<FormState>();
   bool showPass0 = true;
+  bool state = false;
   TextEditingController passUser = TextEditingController();
   TextEditingController userName = TextEditingController();
 
@@ -38,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("------Login widget tree------");
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.red,
@@ -60,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                            padding: const EdgeInsets.fromLTRB(25, 150, 25, 0),
                            child: Text("NeoSTORE",style: TextStyle(fontSize:45.0,color: Colors.white,fontWeight: FontWeight.bold ),),
                          ),
-                         SizedBox(height: 49,),
+                         SizedBox(height: 49.0,),
                          TextFormField(
                            controller: userName,
                            style: TextStyle(color: Colors.white),
@@ -137,9 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                                    borderRadius: BorderRadius.circular(10.0),
                                    side: BorderSide(color: Colors.white)),
                                onPressed: () {
-                                 setState(() {
                                    login();
-                                 });
                                },
                                color: Colors.white,
                                child: Text('LOGIN',

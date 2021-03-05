@@ -24,8 +24,8 @@ class RegisterBloc {
       "gender": gen,
       "phone_no": num,
     });
-    final success = RegisterSuccess.fromJson(jsonDecode(response.body));
-    final error = RegisterError.fromJson(jsonDecode(response.body));
+    final success = SuccessModel.fromJson(jsonDecode(response.body));
+    final error = ErrorModel.fromJson(jsonDecode(response.body));
     if (response.statusCode == 200) {
       responseStatus = response.statusCode;
       print("Status Code:- ${response.statusCode}");

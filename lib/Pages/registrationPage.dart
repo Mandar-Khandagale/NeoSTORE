@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:neostore/Bloc/registration_bloc.dart';
 
-
-Color myRed1 = Color(0xffe91c1a);
+import '../constants.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -40,8 +39,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    print("------Register widget tree-------");
     return Scaffold(
       key: scaffoldKey,
       //resizeToAvoidBottomInset: false,
@@ -77,9 +78,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(color: Colors.white)),
                     onPressed: () {
-                      setState(() {
                         addData();
-                      });
                     },
                     color: Colors.white,
                     child: Text('REGISTER',
