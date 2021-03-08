@@ -21,7 +21,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool isValidateForm1 = false;
   bool showPass1 = true;
   bool showPass2 = true;
-  bool status1 = false;
 
   final registerObj = RegisterBloc();
 
@@ -113,7 +112,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void addData() async {
     isValidateForm1 = true;
-    status1 = true;
     final String fname = fName.text;
     final String lname = lName.text;
     final String mail = email.text;
@@ -233,11 +231,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 prefixIcon: Icon(Icons.lock, color: Colors.white,),
                 suffixIcon: IconButton(
                   color: Colors.white,
-                  icon: Icon(
-                      showPass1 ? Icons.visibility : Icons.visibility_off),
+                  icon: Icon(showPass1 ? Icons.visibility : Icons.visibility_off),
                   onPressed: () {
                     setState(() {
-                      showPass1 = !showPass1;
+                      if(showPass1 == true){ showPass1 = false;} else{ showPass1 = true;}
                     });
                   },
                 ),
@@ -274,11 +271,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 prefixIcon: Icon(Icons.lock, color: Colors.white,),
                 suffixIcon: IconButton(
                   color: Colors.white,
-                  icon: Icon(
-                      showPass2 ? Icons.visibility : Icons.visibility_off),
+                  icon: Icon(showPass2 ? Icons.visibility : Icons.visibility_off),
                   onPressed: () {
                     setState(() {
-                      showPass2 = !showPass2;
+                      if(showPass2 == true){ showPass2 = false;} else{ showPass2 = true;}
                     });
                   },
                 ),

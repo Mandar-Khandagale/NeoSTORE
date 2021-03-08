@@ -19,7 +19,7 @@ class HomePageScreen extends StatefulWidget {
 
 class _HomePageScreenState extends State<HomePageScreen> {
 
-  String firstName, lastName, email,accessToken;
+  String firstName, lastName, email,accessToken,profilePic;
  final drawerObj = LoginBloc();
 
 
@@ -36,6 +36,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
     firstName= perf.getString("key1");
     lastName= perf.getString("key2");
     email= perf.getString("key3");
+    profilePic = perf.getString("key7");
 
   }
 
@@ -98,7 +99,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text("Tables",style: TextStyle(fontSize: 23.0,color: Colors.white,fontWeight: FontWeight.bold)),
+                                  Text("Tables",style: TextStyle(fontSize: 23.0,color: Colors.white,fontWeight: FontWeight.bold),),
                                 ],
                               ),
                               Row(

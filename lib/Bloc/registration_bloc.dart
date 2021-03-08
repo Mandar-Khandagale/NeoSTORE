@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:neostore/user_model.dart';
+import 'package:neostore/Model_Class/user_model.dart';
 
 class RegisterBloc {
 

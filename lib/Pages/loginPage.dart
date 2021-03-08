@@ -23,7 +23,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _loginKey = GlobalKey<FormState>();
-  bool showPass0 = true;
+  bool showPass = true;
   bool state = false;
   TextEditingController passUser = TextEditingController();
   TextEditingController userName = TextEditingController();
@@ -96,17 +96,18 @@ class _LoginPageState extends State<LoginPage> {
                          TextFormField(
                            controller: passUser,
                            style: TextStyle(color: Colors.white),
-                           obscureText: showPass0,
+                           obscureText: showPass,
                            cursorColor: Colors.white,
                            keyboardType: TextInputType.visiblePassword,
                            decoration: InputDecoration(
                              prefixIcon: Icon(Icons.lock, color: Colors.white,),
                              suffixIcon: IconButton(
                                color: Colors.white,
-                               icon: Icon(showPass0 ? Icons.visibility : Icons.visibility_off),
+                               icon: Icon(showPass ? Icons.visibility : Icons.visibility_off),
                                onPressed: (){
                                  setState(() {
-                                   showPass0 = !showPass0;
+                                  if(showPass == true){showPass = false;}
+                                  else{ showPass = true;}
                                  });
                                },
                              ),

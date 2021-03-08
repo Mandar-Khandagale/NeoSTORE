@@ -9,7 +9,7 @@ class AccountDetails extends StatefulWidget {
 }
 
 class _AccountDetailsState extends State<AccountDetails> {
-  String firstName, lastName, email,phoneNo,dob;
+  String firstName, lastName, email,phoneNo,dob,profilePic;
 
 
 
@@ -21,6 +21,7 @@ class _AccountDetailsState extends State<AccountDetails> {
       email = perf.getString("key3");
       phoneNo = perf.getString("key5");
       dob = perf.getString("key6");
+      profilePic = perf.getString("key7");
     });
 
   }
@@ -75,7 +76,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                       disabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      labelText: firstName.toUpperCase(),
+                      labelText: firstName,
                       labelStyle: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -87,7 +88,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                       disabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      labelText: lastName.toUpperCase(),
+                      labelText: lastName,
                       labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -123,7 +124,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                       disabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      labelText: "00-00-0000",
+                      labelText: dob != null ? dob : "Edit your DOB",
                       labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),

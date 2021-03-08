@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:neostore/user_model.dart';
+import 'package:neostore/Model_Class/user_model.dart';
 
 class LoginBloc {
 
@@ -35,6 +35,7 @@ class LoginBloc {
         perf.setString("key4", success.data.accessToken);
         perf.setString("key5", success.data.phoneNo);
         perf.setString("key6", success.data.dob);
+      perf.setString("key7", success.data.profilePic);
       loginSink.add(success.userMsg);
     } else if (response.statusCode == 401){
        final error = ErrorModel.fromJson(jsonDecode(response.body));
