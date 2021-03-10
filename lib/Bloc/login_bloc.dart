@@ -28,6 +28,8 @@ class LoginBloc {
       responseStatus = response.statusCode;
       print('Login Successful ${response.statusCode}');
       print("fname= ${success.data.firstName}");
+      SharedPreferences loginData = await SharedPreferences.getInstance();
+       loginData.setString('login', user);
         SharedPreferences perf = await SharedPreferences.getInstance();
         perf.setString("key1", success.data.firstName);
         perf.setString("key2", success.data.lastName);

@@ -33,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     loginObj.dispose();
+    passUser.dispose();
+    userName.dispose();
     super.dispose();
   }
 
@@ -154,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                              style: TextStyle(fontSize: 18.0, color: Colors.white),
                              recognizer: TapGestureRecognizer()
                                ..onTap = (){
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ForgetPass()));
+                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ForgetPass()));
                                }
                            ),
                          ),
@@ -175,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 46.0,width: 46.0,
                         child: Center(child: IconButton(icon: Icon(Icons.add,size: 30.0,color: Colors.white,),
                         onPressed: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RegistrationPage()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegistrationPage()));
                         },
                         ),),
                       ),
@@ -194,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                             textColor: Colors.black);
                         if(loginObj.responseStatus == 200){
                           Future.delayed(Duration(seconds: 2), (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePageScreen()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageScreen()));
                           });
                         }
                       }

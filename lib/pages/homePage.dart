@@ -2,6 +2,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:neostore/Bloc/login_bloc.dart';
 import 'package:neostore/Pages/account_details.dart';
+import 'package:neostore/Pages/loginPage.dart';
 import 'package:neostore/Pages/table_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
@@ -25,19 +26,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
  @override
   void initState() {
-   setState(() {
      getData();
-   });
     super.initState();
   }
 
   getData() async{
     SharedPreferences perf =  await SharedPreferences.getInstance();
-    firstName= perf.getString("key1");
-    lastName= perf.getString("key2");
-    email= perf.getString("key3");
-    profilePic = perf.getString("key7");
-
+    setState(() {
+      firstName= perf.getString("key1");
+      lastName= perf.getString("key2");
+      email= perf.getString("key3");
+      profilePic = perf.getString("key7");
+    });
   }
 
 
@@ -271,9 +271,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
             ListTile(
               title: Text("Logout",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
               leading: Icon(Icons.logout,color: Colors.white,size: 28.0,),
-              onTap: (){
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+              onTap: () async {
+               // Navigator.of(context).pop();
+                SharedPreferences loginData = await SharedPreferences.getInstance();
+                loginData.remove("login");
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
               },
             ),
             Divider(thickness: 1.0,),

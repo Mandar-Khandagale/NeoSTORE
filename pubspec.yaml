@@ -24,12 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.2
-  font_awesome_flutter: ^8.11.0
   fluttertoast: ^7.1.8
   device_preview: ^0.5.5
   carousel_pro: ^1.0.0
   shared_preferences: ^0.5.12+4
-  flutter_rating_bar: ^3.0.0
+
 
 
 

@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:neostore/Pages/account_details.dart';
-import 'package:neostore/Pages/homePage.dart';
-import 'package:neostore/Pages/loginPage.dart';
-import 'package:neostore/Pages/table_list.dart';
+import 'package:neostore/pages/splash_screen_page.dart';
 
 
 void main() {
   runApp(MyApp());
 }
 
-// void main() => runApp(
-//   DevicePreview(
-//     builder: (context) => MyApp(), // Wrap your app
-//   ),
-// );
 
 class MyApp extends StatelessWidget {
 
@@ -21,8 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: SplashScreenPage(),
     );
   }
 }
+
+
 
