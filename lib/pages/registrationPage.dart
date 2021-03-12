@@ -35,6 +35,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void dispose() {
       registerObj.dispose();
+      fName.dispose();
+      lName.dispose();
+      email.dispose();
+      pass.dispose();
+      conPass.dispose();
+      phone.dispose();
     super.dispose();
   }
 
@@ -154,7 +160,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Required';
-                } else if (!RegExp(r"^[a-zA-Z,.\-]+$").hasMatch(value)) {
+                } else if (!RegExp(r"^[a-zA-Z]+$").hasMatch(value)) {
                   return 'Only Characters';
                 } else {
                   return null;
@@ -183,7 +189,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Required';
-                } else if (!RegExp(r"^[a-zA-Z,.\-]+$").hasMatch(value)) {
+                } else if (!RegExp(r"^[a-zA-Z]+$").hasMatch(value)) {
                   return 'Only Characters';
                 } else {
                   return null;
@@ -294,10 +300,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 if (value.isEmpty) {
                   return 'Please re-enter Password';
                 }
-                if (pass.text != conPass.text) {
+                else if (pass.text != conPass.text) {
                   return 'Password does not match';
                 }
-                return null;
+                else return null;
               },
             ),
             SizedBox(height: 23.0,),

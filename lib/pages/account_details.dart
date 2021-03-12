@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neostore/pages/homePage.dart';
+import 'package:neostore/pages/reset_password_page.dart';
+import 'package:neostore/pages/update_account_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
@@ -23,6 +26,7 @@ class _AccountDetailsState extends State<AccountDetails> {
       dob = perf.getString("key6");
       profilePic = perf.getString("key7");
     });
+    print("Image url $profilePic ");
 
   }
 
@@ -43,6 +47,7 @@ class _AccountDetailsState extends State<AccountDetails> {
         centerTitle: true,
         leading: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
           Navigator.pop(context);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageScreen()));
         },),
         actions: [
           Icon(Icons.search,color: Colors.white,size: 30.0,)
@@ -66,6 +71,10 @@ class _AccountDetailsState extends State<AccountDetails> {
                             color: Colors.white,
                           shape: BoxShape.circle
                         ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(profilePic,fit: BoxFit.fitHeight,),
+                        )
                       ),
                     ),
                   ),
@@ -131,12 +140,14 @@ class _AccountDetailsState extends State<AccountDetails> {
                   SizedBox(height: 20.0,),
                   Container(
                     width: double.infinity,
-                    height: 47.0,
+                    height: 55.0,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(color: Colors.white)),
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateAccountDetails()));
+                      },
                       color: Colors.white,
                       child: Text("EDIT PROFILE",style: TextStyle(fontSize: 23.0, color: Colors.red,fontWeight: FontWeight.w400)),
                       ),
@@ -149,7 +160,9 @@ class _AccountDetailsState extends State<AccountDetails> {
                 width: double.infinity,
                 height: 52.0,
                 child: FlatButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ResetPasswordPage()));
+                  },
                   color: Colors.white,
                   child: Text("RESET PASSWORD",style: TextStyle(fontSize: 17.0, color: Colors.black,fontWeight: FontWeight.w300)),
                 ),

@@ -70,10 +70,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 dotBgColor: Colors.transparent,
                 dotSize: 4.0,
                 images: [
-                  Image.asset("assets/table.jpeg",fit: BoxFit.cover,),
-                  Image.asset("assets/chairs.jpg",fit: BoxFit.cover,),
-                  Image.asset("assets/cupboards1.jpeg",fit: BoxFit.cover,),
-                  Image.asset("assets/sofa.jpg",fit: BoxFit.cover,),
+                  Image.asset("assets/table1.jpg",fit: BoxFit.cover,),
+                  Image.asset("assets/chair1.jpg",fit: BoxFit.cover,),
+                  Image.asset("assets/cupboards1.jpg",fit: BoxFit.cover,),
+                  Image.asset("assets/sofa1.jpg",fit: BoxFit.cover,),
                 ],
               ),
             ),
@@ -104,7 +104,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
                                 children: [
                                   Icon(Icons.deck,size: 85.0,color: Colors.white,),
                                 //  Image.asset("assets/ic_table.png",width: 95.0,height: 95.0,fit: BoxFit.fill,)
@@ -209,6 +208,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         color: Colors.white,
                         shape: BoxShape.circle
                       ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(profilePic,fit: BoxFit.fitHeight,),
+                      )
                     ),
                     SizedBox(height: 18.0,),
                     RichText(
@@ -254,7 +257,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               title: Text("My Account",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
               leading: Icon(Icons.person,color: Colors.white,size: 28.0,),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AccountDetails()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>AccountDetails()));
               },
             ),
             Divider(thickness: 1.0,),
