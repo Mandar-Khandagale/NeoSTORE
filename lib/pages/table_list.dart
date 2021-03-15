@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neostore/Bloc/product_table_list_bloc.dart';
 import 'package:neostore/Model_Class/product_list_model_class.dart';
+import 'package:neostore/pages/product_details_page.dart';
 import '../constants.dart';
 
 class ProductTable extends StatefulWidget {
@@ -37,6 +38,7 @@ class _ProductTableState extends State<ProductTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         title: Text(
           'Tables',
           style: TextStyle(fontSize: 25.0),
@@ -79,16 +81,15 @@ class _ProductTableState extends State<ProductTable> {
                               padding: const EdgeInsets.only(
                                   top: 13.0, bottom: 13.0),
                               child: ListTile(
+                                onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage()));},
                                 leading: Container(
                                   height: 73.0,
                                   width: 66.0,
                                   child: Image(
-                                    image: NetworkImage(
-                                        dataList[index].productImages),
+                                    image: NetworkImage(dataList[index].productImages),
                                   ),
                                 ),
-                                title: Text(
-                                  dataList[index].name,
+                                title: Text(dataList[index].name,
                                   style: TextStyle(
                                     fontSize: 15.0,
                                   ),

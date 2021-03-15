@@ -69,12 +69,10 @@ class _AccountDetailsState extends State<AccountDetails> {
                         width: 133.0,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                          shape: BoxShape.circle
+                          shape: BoxShape.circle,
+                          image: DecorationImage(image: profilePic != null ? NetworkImage(profilePic):NetworkImage('https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png'),
+                              fit:BoxFit.fill ),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network(profilePic,fit: BoxFit.fitHeight,),
-                        )
                       ),
                     ),
                   ),

@@ -25,6 +25,7 @@ class TableListBloc{
      var requestUrl = endpointUrl + "?" + queryString;
      var response = await http.get(requestUrl);
       var jsonData = response.body;
+      print("tablelist:- ${response.body}");
       if(response.statusCode == 200){
         ProductList productList = ProductList.fromJson(jsonDecode(jsonData));
         tableListSink.add(productList);

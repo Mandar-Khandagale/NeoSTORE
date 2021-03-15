@@ -23,7 +23,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
   TextEditingController emailAdd = TextEditingController();
   TextEditingController phoneNo = TextEditingController();
   TextEditingController dob = TextEditingController();
-  String accessToken; String  base64Image;
+  String accessToken; String  base64Image,profilePic;
 
   final updateObj = UpdateAccountBloc();
 
@@ -44,6 +44,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
       phoneNo.text = perf.getString("key5");
       dob.text = perf.getString("key6");
       accessToken = perf.getString("key4");
+      profilePic = perf.getString("key7");
     });
   }
 
@@ -100,12 +101,12 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                                   shape: BoxShape.circle,
                               ),
                               child: _image != null ? ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.file(_image,fit: BoxFit.fitHeight,),
+                                borderRadius: BorderRadius.circular(133),
+                                child: Image.file(_image,fit: BoxFit.fill,),
                               ) : Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(133),
                                 ),
                                 child: Icon(Icons.camera_alt),
                               ),
