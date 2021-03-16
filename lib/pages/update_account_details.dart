@@ -99,16 +99,10 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                              ),
-                              child: _image != null ? ClipRRect(
-                                borderRadius: BorderRadius.circular(133),
-                                child: Image.file(_image,fit: BoxFit.fill,),
-                              ) : Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(133),
+                                image: DecorationImage(image: _image != null ?  Image.file(_image,fit: BoxFit.fill,)
+                                    : NetworkImage(profilePic != null ? profilePic :
+                                "https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png",),fit: BoxFit.fill
                                 ),
-                                child: Icon(Icons.camera_alt),
                               ),
                             ),
                           ),

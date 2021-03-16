@@ -1,29 +1,64 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:neostore/Bloc/product_detail_bloc.dart';
-import 'package:neostore/Model_Class/product_detail_model_class.dart';
+import 'package:neostore/bloc/buy_now_bloc.dart';
+import 'package:neostore/bloc/set_product_rating_bloc.dart';
 import 'package:neostore/constants.dart';
+import 'package:neostore/model_class/product_detail_model_class.dart';
+import 'package:neostore/model_class/set_rating_model_class.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetailPage extends StatefulWidget {
+
+  int id;
+  String name;
+  String listImage;
+  ProductDetailPage({this.id,this.name,this.listImage});
+
   @override
-  _ProductDetailPageState createState() => _ProductDetailPageState();
+  _ProductDetailPageState createState() => _ProductDetailPageState(this.id,this.name,this.listImage);
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+
+  int id;
+  String name;
+  String listImage;
+  _ProductDetailPageState(this.id,this.name,this.listImage);
+
+  TextEditingController quantityCon = TextEditingController();
   final productObj = ProductDetailBloc();
+  final ratingObj = SetProductRatingBloc();
+  final buyObj = BuyNowBloc();
+  String image,accessToken;
+  int rate;
+  var updatedRating;
+  int responseStatus;
 
   @override
   void dispose() {
     productObj.dispose();
+    ratingObj.dispose();
+    buyObj.dispose();
+    quantityCon.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    productObj.getProductDetail();
+    productObj.getProductDetail(id);
+    getToken();
     super.initState();
   }
 
+  getToken() async {
+    SharedPreferences perf = await SharedPreferences.getInstance();
+    setState(() {
+      accessToken = perf.getString("key4");
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +66,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text(
-           "Centre Coffee Table",
+           name,
           style: TextStyle(fontSize: 25.0),
         ),
         centerTitle: true,
@@ -58,9 +93,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<ProductImages> imageList = snapshot.data.data.productImages;
-              return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index){
+               rate = snapshot.data.data.rating;
                     return SingleChildScrollView(
                       child: Container(
                         child: Column(
@@ -84,14 +117,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     Text("Category - Tables", style: TextStyle(fontSize: 16.0, color: Colors.black),),
                                     SizedBox(height: 10.0,),
                                     Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          snapshot.data.data.producer,
-                                          style: TextStyle(
-                                              fontSize: 10.0, color: Colors.black),
-                                        ),
+                                        Text(snapshot.data.data.producer, style: TextStyle(fontSize: 10.0, color: Colors.black),),
                                         productRating(snapshot.data.data.rating),
                                       ],
                                     ),
@@ -134,39 +162,34 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         Container(
                                           width: 257,
                                           height: 178,
-                                          child: Image(image: NetworkImage(imageList[0].image),fit: BoxFit.fill,),
+                                          child: Image.network(image != null ? image : listImage,),
                                         ),
-                                        SizedBox(
-                                          height: 6.0,
-                                        ),
+                                        SizedBox(height: 6.0,),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Container(
-                                                width: 78.0,
-                                                height: 69.0,
-                                                child: Image(image: NetworkImage(imageList[0].image),fit: BoxFit.fill,),
-                                              ),
-                                              Container(
-                                                width: 78.0,
-                                                height: 69.0,
-                                                child: Image(image: NetworkImage(imageList[1].image),fit: BoxFit.fill,),
-                                              ),
-                                              Container(
-                                                width: 78.0,
-                                                height: 69.0,
-                                                child: Image.network("https://www.ikea.com/in/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg?f=xxs"),
-                                              ),
-                                            ],
+                                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                                          child: Container(
+                                            height: 70.0,
+                                            child: ListView.builder(
+                                                itemCount: imageList.length,
+                                                scrollDirection: Axis.horizontal,
+                                                itemBuilder: (context, index){
+                                              return Row(
+                                                children: [
+                                                  Container(
+                                                    child: InkWell(child: Image.network(imageList[index].image,),
+                                                    onTap: (){centerImage(imageList[index].image);},
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10,),
+                                                ],
+                                              );
+                                            }),
                                           ),
                                         ),
                                         SizedBox(height: 35.0,),
                                         Divider(thickness: 2.0,),
                                         Container(
                                           width: double.infinity,
-                                          height: 150,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(
@@ -211,7 +234,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(10.0),
                                             side: BorderSide(color: Colors.white)),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          buyNowScreen(context);
+                                        },
                                         color: Colors.red,
                                         child: Text("BUY NOW",
                                             style: TextStyle(
@@ -227,7 +252,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(10.0),
                                             side: BorderSide(color: Colors.white)),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setProductRating(context);
+                                        },
                                         color: grey,
                                         child: Text("RATE",
                                             style: TextStyle(
@@ -244,12 +271,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                       ),
                     );
-              });
             }else{
               return Center(child: CircularProgressIndicator());
             }
           }),
     );
+  }
+  centerImage(String ig){
+    setState(() {
+      image = ig;
+    });
   }
 
   productRating(int rating) {
@@ -441,4 +472,133 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     }
   }
 
+  setProductRating(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Center(child: Text(name,style: TextStyle(fontSize: 25),)),
+            content:  Container(
+              height: 300,
+              child: Column(
+                children: [
+                  Image.network(listImage),
+                  SizedBox(height: 10.0,),
+                  RatingBar.builder(
+                    initialRating: rate.toDouble(),
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                    itemBuilder: (context, i) => Icon(Icons.star, color: Colors.amber,size: 44,),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                      updatedRating = rating.toString();
+                    },),
+                  SizedBox(height: 10.0,),
+                  Container(
+                    width: double.infinity,
+                    height: 55.0,
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          side: BorderSide(color: Colors.white)),
+                      onPressed: () {
+                        ratingObj.setRating(id,updatedRating);
+                      },
+                      color: Colors.red,
+                      child: Text("RATE NOW", style: TextStyle(fontSize: 20.0, color: Colors.white,)),
+                    ),
+                  ),
+                  StreamBuilder<SetRating>(
+                    stream: ratingObj.setRatingStream,
+                    builder: (context, snapshot){
+                      if(snapshot.data != null){
+                        Fluttertoast.showToast(
+                            msg: snapshot.data.userMsg,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black
+                        );
+                        if(ratingObj.responseStatus == 200){
+                          Future.delayed(Duration(seconds: 2), (){
+                            Navigator.pop(context);
+                          });
+                        }
+                      }
+                      return Container();
+                    },),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+   buyNowScreen(BuildContext context) {
+     showDialog(
+         context: context,
+         builder: (context) {
+           return SingleChildScrollView(
+             child: AlertDialog(
+               title: Center(child: Text(name,style: TextStyle(fontSize: 25),)),
+               content:  Container(
+                 height: 320,
+                 child: Column(
+                   children: [
+                     Container(
+                       decoration: BoxDecoration(
+                         border: Border.all(color: Colors.black)
+                       ),
+                         child: Image.network(listImage)),
+                     SizedBox(height: 10.0,),
+                     Text("Enter Qty",style: TextStyle(fontSize: 25),),
+                     SizedBox(height: 10.0,),
+                     TextFormField(
+                       controller: quantityCon,
+                     ),
+                     SizedBox(height: 10.0,),
+                     Container(
+                       width: 198.0,
+                       height: 47.0,
+                       child: FlatButton(
+                         shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.circular(10.0),
+                             side: BorderSide(color: Colors.white)),
+                         onPressed: () {
+                           final String qua = quantityCon.text;
+                           buyObj.buyNow(id, qua, accessToken);
+                         },
+                         color: Colors.red,
+                         child: Text("SUBMIT", style: TextStyle(fontSize: 20.0, color: Colors.white,)),
+                       ),
+                     ),
+                     StreamBuilder<String>(
+                       stream: buyObj.buyNowStream,
+                       builder: (context, snapshot){
+                         if(snapshot.data != null){
+                           Fluttertoast.showToast(
+                               msg: snapshot.data,
+                               toastLength: Toast.LENGTH_SHORT,
+                               gravity: ToastGravity.BOTTOM,
+                               backgroundColor: Colors.white,
+                               textColor: Colors.black
+                           );
+                           if(buyObj.responseStatus == 200){
+                             Future.delayed(Duration(seconds: 2), (){
+                               Navigator.pop(context);
+                             });
+                           }
+                         }
+                         return Container();
+                       },),
+                   ],
+                 ),
+               ),
+             ),
+           );
+         });
+   }
 }

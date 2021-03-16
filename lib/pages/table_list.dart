@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:neostore/Bloc/product_table_list_bloc.dart';
-import 'package:neostore/Model_Class/product_list_model_class.dart';
+import 'package:neostore/bloc/product_table_list_bloc.dart';
+import 'package:neostore/model_class/product_list_model_class.dart';
 import 'package:neostore/pages/product_details_page.dart';
 import '../constants.dart';
 
@@ -81,7 +81,10 @@ class _ProductTableState extends State<ProductTable> {
                               padding: const EdgeInsets.only(
                                   top: 13.0, bottom: 13.0),
                               child: ListTile(
-                                onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage()));},
+                                onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id,
+                                name: dataList[index].name,
+                                listImage: dataList[index].productImages,)));
+                                },
                                 leading: Container(
                                   height: 73.0,
                                   width: 66.0,

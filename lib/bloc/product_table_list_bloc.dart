@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:neostore/Model_Class/product_list_model_class.dart';
+import 'package:neostore/model_class/product_list_model_class.dart';
 
 
 
