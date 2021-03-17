@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:io' as Io ;
+import 'dart:io';
+import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -27,7 +28,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
 
   final updateObj = UpdateAccountBloc();
 
-  Io.File _image;
+  File _image;
 
   @override
   void initState() {
@@ -99,7 +100,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                                image: DecorationImage(image: _image != null ?  Image.file(_image,fit: BoxFit.fill,)
+                                image: DecorationImage(image: _image != null ?  FileImage(File(_image.path))
                                     : NetworkImage(profilePic != null ? profilePic :
                                 "https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png",),fit: BoxFit.fill
                                 ),
@@ -321,17 +322,17 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
   }
   
   _imgFromCamera() async {
-    var image = await ImagePicker().getImage(source: ImageSource.camera, imageQuality: 50);
+    PickedFile image = await ImagePicker().getImage(source: ImageSource.camera,imageQuality: 60,);
     setState(() {
-      _image = Io.File(image.path);
+      _image = File(image.path);
       List<int> imageBytes =  _image.readAsBytesSync();
       base64Image = base64Encode(imageBytes);
     });
   }
   _imgFromGallery() async {
-    var image = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
+    PickedFile image = await ImagePicker().getImage(source: ImageSource.gallery,imageQuality: 60,);
     setState(() {
-      _image = Io.File(image.path);
+      _image = File(image.path);
       List<int> imageBytes =  _image.readAsBytesSync();
       base64Image = base64Encode(imageBytes);
     });

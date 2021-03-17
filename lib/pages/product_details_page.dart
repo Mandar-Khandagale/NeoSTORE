@@ -123,9 +123,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         productRating(snapshot.data.data.rating),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
+                                    SizedBox(height: 10.0,),
                                   ],
                                 ),
                               ),
@@ -152,10 +150,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                     fontSize: 20.0,
                                                     color: Colors.red),
                                               ),
-                                              Icon(
-                                                Icons.share,
-                                                size: 25.0,
-                                              )
+                                              Icon(Icons.share, size: 25.0,)
                                             ],
                                           ),
                                         ),
@@ -292,31 +287,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: 11,
             child: Row(
               children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
               ],
             ),
           );
@@ -329,31 +304,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: 11,
             child: Row(
               children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
               ],
             ),
           );
@@ -366,31 +321,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: 11,
             child: Row(
               children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
               ],
             ),
           );
@@ -403,31 +338,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: 11,
             child: Row(
               children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.grey,
-                  size: 12.0,
-                ),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.grey, size: 12.0,),
               ],
             ),
           );
@@ -440,31 +355,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: 11,
             child: Row(
               children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 12.0,
-                ),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
+                Icon(Icons.star, color: Colors.amber, size: 12.0,),
               ],
             ),
           );
@@ -473,30 +368,41 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   setProductRating(BuildContext context) async {
-    return showDialog(
-        context: context,
+    return showDialog(context: context,
         builder: (context) {
           return AlertDialog(
-            title: Center(child: Text(name,style: TextStyle(fontSize: 25),)),
+            insetPadding: EdgeInsets.symmetric(horizontal:10.0,vertical: 10.0),
             content:  Container(
-              height: 300,
+              height: 440.0,
               child: Column(
                 children: [
-                  Image.network(listImage),
-                  SizedBox(height: 10.0,),
-                  RatingBar.builder(
-                    initialRating: rate.toDouble(),
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                    itemBuilder: (context, i) => Icon(Icons.star, color: Colors.amber,size: 44,),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                      updatedRating = rating.toString();
-                    },),
-                  SizedBox(height: 10.0,),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 33.0),
+                    child: Center(
+                        child: Text(name,style: TextStyle(fontSize: 25),)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        height: 178.0,width: 257,
+                        child: Image.network(listImage)),
+                  ),
+                  SizedBox(height: 33.0,),
+                  SizedBox(
+                    child: RatingBar.builder(
+                      initialRating: rate.toDouble(),
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                      itemBuilder: (context, i) => Icon(Icons.star, color: Colors.amber,size: 44,),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                        updatedRating = rating.toString();
+                      },),
+                  ),
+                  SizedBox(height: 33.0,),
                   Container(
                     width: double.infinity,
                     height: 55.0,
@@ -511,6 +417,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       child: Text("RATE NOW", style: TextStyle(fontSize: 20.0, color: Colors.white,)),
                     ),
                   ),
+                  SizedBox(height: 22.0,),
                   StreamBuilder<SetRating>(
                     stream: ratingObj.setRatingStream,
                     builder: (context, snapshot){
@@ -538,28 +445,45 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
    buyNowScreen(BuildContext context) {
-     showDialog(
-         context: context,
+     showDialog(context: context,
          builder: (context) {
            return SingleChildScrollView(
              child: AlertDialog(
-               title: Center(child: Text(name,style: TextStyle(fontSize: 25),)),
+               insetPadding: EdgeInsets.symmetric(horizontal:10.0,vertical: 10.0),
                content:  Container(
-                 height: 320,
                  child: Column(
                    children: [
-                     Container(
-                       decoration: BoxDecoration(
-                         border: Border.all(color: Colors.black)
-                       ),
-                         child: Image.network(listImage)),
-                     SizedBox(height: 10.0,),
-                     Text("Enter Qty",style: TextStyle(fontSize: 25),),
-                     SizedBox(height: 10.0,),
-                     TextFormField(
-                       controller: quantityCon,
+                     Padding(
+                       padding: const EdgeInsets.only(bottom: 33.0),
+                       child: Center(
+                           child: Text(name,style: TextStyle(fontSize: 25),)),
                      ),
-                     SizedBox(height: 10.0,),
+                     Padding(
+                       padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                       child: Container(
+                           height: 178.0,width: 257,
+                         decoration: BoxDecoration(
+                           border: Border.all(color: Colors.black),
+                         ),
+                           child: Image.network(listImage)),
+                     ),
+                     SizedBox(height: 33.0,),
+                     Text("Enter Qty",style: TextStyle(fontSize: 20),),
+                     SizedBox(height: 22.0,),
+                     Container(
+                       width: 112,
+                       height: 43,
+                       child: TextFormField(
+                         controller: quantityCon,
+                         decoration: InputDecoration(
+                           focusedBorder: OutlineInputBorder(
+                             borderSide: BorderSide(color: Colors.green),),
+                           enabledBorder: OutlineInputBorder(
+                             borderSide: BorderSide(color: Colors.green),),
+                         ),
+                       ),
+                     ),
+                     SizedBox(height: 22.0,),
                      Container(
                        width: 198.0,
                        height: 47.0,
@@ -575,6 +499,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                          child: Text("SUBMIT", style: TextStyle(fontSize: 20.0, color: Colors.white,)),
                        ),
                      ),
+                     SizedBox(height: 10.0,),
                      StreamBuilder<String>(
                        stream: buyObj.buyNowStream,
                        builder: (context, snapshot){
@@ -601,4 +526,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
            );
          });
    }
+
+
+
+
 }

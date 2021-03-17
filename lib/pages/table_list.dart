@@ -78,19 +78,16 @@ class _ProductTableState extends State<ProductTable> {
                           Container(
                             height: 93.0,
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 13.0, bottom: 13.0),
+                              padding: const EdgeInsets.only(top: 13.0, bottom: 13.0),
                               child: ListTile(
-                                onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id,
-                                name: dataList[index].name,
+                                onTap:(){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id, name: dataList[index].name,
                                 listImage: dataList[index].productImages,)));
                                 },
                                 leading: Container(
                                   height: 73.0,
                                   width: 66.0,
-                                  child: Image(
-                                    image: NetworkImage(dataList[index].productImages),
-                                  ),
+                                  child: Image(image: NetworkImage(dataList[index].productImages),),
                                 ),
                                 title: Text(dataList[index].name,
                                   style: TextStyle(

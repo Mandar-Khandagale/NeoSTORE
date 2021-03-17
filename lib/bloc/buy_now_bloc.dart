@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:neostore/model_class/buy_now_model_class.dart';
-import 'package:neostore/model_class/set_rating_model_class.dart';
 import 'package:http/http.dart' as http;
 
 class BuyNowBloc{
@@ -25,6 +24,7 @@ class BuyNowBloc{
       responseStatus = response.statusCode;
       print('Buy success ${response.statusCode}');
       print('buy success ${response.body}');
+      print('buy success access ${accessToken}');
       buyNowSink.add(buyNowModel.userMsg);
     }else if(response.statusCode == 401){
       responseStatus = response.statusCode;

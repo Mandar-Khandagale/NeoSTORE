@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:neostore/Bloc/login_bloc.dart';
 import 'package:neostore/Pages/account_details.dart';
 import 'package:neostore/Pages/loginPage.dart';
-import 'package:neostore/Pages/table_list.dart';
+import 'package:neostore/pages/my_cart_page.dart';
+import 'package:neostore/pages/table_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
@@ -88,30 +89,35 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     mainAxisSpacing: 2.0,
                   ),
                   children:[
-                    Container(
-                        margin: EdgeInsets.fromLTRB(13, 11,5.5,5.5),
-                      color: Colors.red,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text("Tables",style: TextStyle(fontSize: 23.0,color: Colors.white,fontWeight: FontWeight.bold),),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(Icons.deck,size: 85.0,color: Colors.white,),
-                                //  Image.asset("assets/ic_table.png",width: 95.0,height: 95.0,fit: BoxFit.fill,)
-                                ],
-                              ),
-                            ],
-                          ),
-                        )),
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductTable()));
+                      },
+                      child: Container(
+                          margin: EdgeInsets.fromLTRB(13, 11,5.5,5.5),
+                        color: Colors.red,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text("Tables",style: TextStyle(fontSize: 23.0,color: Colors.white,fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.deck,size: 85.0,color: Colors.white,),
+                                  //  Image.asset("assets/ic_table.png",width: 95.0,height: 95.0,fit: BoxFit.fill,)
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
                     Container(
                         margin: EdgeInsets.fromLTRB(5.5, 11, 13,5.5),
                       color: Colors.red,
@@ -229,6 +235,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ListTile(
               title: Text("My Cart",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
               leading: Icon(Icons.shopping_cart,color: Colors.white,size: 28.0,),
+              onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>MyCartPage()));},
             ),
             Divider(thickness: 1.0,),
             ListTile(
