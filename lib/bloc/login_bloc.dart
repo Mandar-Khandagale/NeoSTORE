@@ -31,13 +31,13 @@ class LoginBloc {
       SharedPreferences loginData = await SharedPreferences.getInstance();
        loginData.setString('login', user);
         SharedPreferences perf = await SharedPreferences.getInstance();
-        perf.setString("key1", success.data.firstName);
-        perf.setString("key2", success.data.lastName);
-        perf.setString("key3", success.data.email);
-        perf.setString("key4", success.data.accessToken);
-        perf.setString("key5", success.data.phoneNo);
-        perf.setString("key6", success.data.dob);
-      perf.setString("key7", success.data.profilePic);
+        perf.setString("firstName", success.data.firstName);
+        perf.setString("lastName", success.data.lastName);
+        perf.setString("email", success.data.email);
+        perf.setString("accessToken", success.data.accessToken);
+        perf.setString("phoneNo", success.data.phoneNo);
+        perf.setString("dob", success.data.dob);
+      perf.setString("profilePic", success.data.profilePic);
       loginSink.add(success.userMsg);
     } else if (response.statusCode == 401){
        final error = ErrorModel.fromJson(jsonDecode(response.body));

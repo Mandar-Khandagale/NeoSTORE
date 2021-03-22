@@ -3,8 +3,16 @@ class MyCartModel {
   List<Data> data;
   int count;
   int total;
+  String message;
+  String userMsg;
 
-  MyCartModel({this.status, this.data, this.count, this.total});
+  MyCartModel(
+      {this.status,
+        this.data,
+        this.count,
+        this.total,
+        this.message,
+        this.userMsg});
 
   MyCartModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -16,6 +24,8 @@ class MyCartModel {
     }
     count = json['count'];
     total = json['total'];
+    message = json['message'];
+    userMsg = json['user_msg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,6 +36,8 @@ class MyCartModel {
     }
     data['count'] = this.count;
     data['total'] = this.total;
+    data['message'] = this.message;
+    data['user_msg'] = this.userMsg;
     return data;
   }
 }

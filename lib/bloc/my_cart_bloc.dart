@@ -5,7 +5,7 @@ import 'package:neostore/model_class/my_cart_model_class.dart';
 
 class MyCartBloc{
 
-  StreamController stateStreamController = StreamController<MyCartModel>();
+  StreamController stateStreamController = StreamController<MyCartModel>.broadcast();
   StreamSink<MyCartModel> get myCartSink => stateStreamController.sink;
   Stream<MyCartModel> get myCartStream => stateStreamController.stream;
 
@@ -17,6 +17,9 @@ class MyCartBloc{
     print("AccessToken:- $accessToken");
     print("Mycart body ${response.body}");
     if(response.statusCode == 200){
+      MyCartModel myCart = MyCartModel.fromJson(jsonDecode(response.body));
+      myCartSink.add(myCart);
+    }else{
       MyCartModel myCart = MyCartModel.fromJson(jsonDecode(response.body));
       myCartSink.add(myCart);
     }

@@ -39,13 +39,13 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
   getToken() async {
     SharedPreferences perf = await SharedPreferences.getInstance();
     setState(() {
-      fName.text = perf.getString("key1");
-      lName.text = perf.getString("key2");
-      emailAdd.text = perf.getString("key3");
-      phoneNo.text = perf.getString("key5");
-      dob.text = perf.getString("key6");
-      accessToken = perf.getString("key4");
-      profilePic = perf.getString("key7");
+      fName.text = perf.getString("firstName");
+      lName.text = perf.getString("lastName");
+      emailAdd.text = perf.getString("email");
+      phoneNo.text = perf.getString("phoneNo");
+      dob.text = perf.getString("dob");
+      accessToken = perf.getString("accessToken");
+      profilePic = perf.getString("profilePic");
     });
   }
 
@@ -72,9 +72,6 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
         leading: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
           Navigator.pop(context);
         },),
-        actions: [
-          Icon(Icons.search,color: Colors.white,size: 30.0,)
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -269,8 +266,13 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                             print("Update:-$accessToken");
                             if(updateAccountKey.currentState.validate()){
                              String firstN = fName.text; String lastN = lName.text; String email = emailAdd.text; String phone = phoneNo.text;
-                             String date = dob.text; final String pic = base64Image;
-                              updateObj.updateAccount(firstN,lastN,email,phone,date,accessToken,pic);
+                             String date = dob.text;  String pic = base64Image;
+                             if(pic == null){
+                               pic = "null";
+                               updateObj.updateAccount(firstN,lastN,email,phone,date,accessToken,pic);
+                             }else{
+                               updateObj.updateAccount(firstN,lastN,email,phone,date,accessToken,pic);
+                             }
                             }
                           },
                           color: Colors.white,

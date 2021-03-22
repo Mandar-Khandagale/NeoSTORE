@@ -32,7 +32,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   getToken() async {
     SharedPreferences perf = await SharedPreferences.getInstance();
     setState(() {
-      accessToken = perf.getString("key4");
+      accessToken = perf.getString("accessToken");
     });
   }
 

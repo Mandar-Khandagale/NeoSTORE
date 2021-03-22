@@ -76,56 +76,49 @@ class _ProductTableState extends State<ProductTable> {
                       return Column(
                         children: [
                           Container(
-                            height: 93.0,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 13.0, bottom: 13.0),
-                              child: ListTile(
-                                onTap:(){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id, name: dataList[index].name,
-                                listImage: dataList[index].productImages,)));
-                                },
-                                leading: Container(
-                                  height: 73.0,
-                                  width: 66.0,
-                                  child: Image(image: NetworkImage(dataList[index].productImages),),
-                                ),
-                                title: Text(dataList[index].name,
+                            height: 100.0,
+                            child: ListTile(
+                              onTap:(){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id, name: dataList[index].name,
+                              listImage: dataList[index].productImages,)));
+                              },
+                              leading: Container(
+                                height: 66.0,
+                                width: 73.0,
+                                child: Image(image: NetworkImage(dataList[index].productImages),fit: BoxFit.fill,),
+                              ),
+                              title: Padding(
+                                padding: const EdgeInsets.only(top:8.0),
+                                child: Text(dataList[index].name,
                                   style: TextStyle(
                                     fontSize: 15.0,
                                   ),
                                 ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      dataList[index].producer,
-                                      style: TextStyle(fontSize: 10.0),
-                                    ),
-                                    SizedBox(
-                                      height: 16.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Rs." +
-                                              dataList[index].cost.toString(),
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.red),
-                                        ),
-                                        //  productRating(list[index].rating),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                trailing: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    productRating(dataList[index].rating),
-                                  ],
-                                ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    dataList[index].producer,
+                                    style: TextStyle(fontSize: 10.0),
+                                  ),
+                                  SizedBox(height: 16.0,),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Rs." + dataList[index].cost.toString(),
+                                        style: TextStyle(fontSize: 20.0, color: Colors.red),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              trailing: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  productRating(dataList[index].rating),
+                                ],
                               ),
                             ),
                           ),

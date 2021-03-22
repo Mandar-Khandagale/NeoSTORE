@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:neostore/Bloc/product_detail_bloc.dart';
 import 'package:neostore/bloc/buy_now_bloc.dart';
@@ -56,7 +57,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   getToken() async {
     SharedPreferences perf = await SharedPreferences.getInstance();
     setState(() {
-      accessToken = perf.getString("key4");
+      accessToken = perf.getString("accessToken");
     });
   }
   @override
@@ -80,13 +81,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          Icon(
-            Icons.search,
-            color: Colors.white,
-            size: 30.0,
-          )
-        ],
       ),
       body: StreamBuilder<ProductDetails>(
           stream: productObj.productDetailStream,
@@ -150,7 +144,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                     fontSize: 20.0,
                                                     color: Colors.red),
                                               ),
-                                              Icon(Icons.share, size: 25.0,)
+                                              IconButton(
+                                                iconSize: 23.0,
+                                                icon: Icon(Icons.share,color: grey1,),
+                                                onPressed: (){
+                                                  print("Share");
+                                                  share(snapshot.data.data.name,snapshot.data.data.description);
+                                                },
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -162,23 +163,30 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         SizedBox(height: 6.0,),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                                          child: Container(
-                                            height: 70.0,
-                                            child: ListView.builder(
-                                                itemCount: imageList.length,
-                                                scrollDirection: Axis.horizontal,
-                                                itemBuilder: (context, index){
-                                              return Row(
-                                                children: [
-                                                  Container(
-                                                    child: InkWell(child: Image.network(imageList[index].image,),
-                                                    onTap: (){centerImage(imageList[index].image);},
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10,),
-                                                ],
-                                              );
-                                            }),
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Container(
+                                               height: 69.0,
+                                               child: Row(
+                                                 children: [
+                                                   ListView.builder(
+                                                     shrinkWrap: true,
+                                                       itemCount: imageList.length,
+                                                       scrollDirection: Axis.horizontal,
+                                                       itemBuilder: (context, index){
+                                                     return Row(
+                                                       children: [
+                                                         InkWell(
+                                                           child: Image.network(imageList[index].image,),
+                                                         onTap: (){centerImage(imageList[index].image);},
+                                                         ),
+                                                         SizedBox(width: 10,),
+                                                       ],
+                                                     );
+                                                   }),
+                                                 ],
+                                               ),
+                                            ),
                                           ),
                                         ),
                                         SizedBox(height: 35.0,),
@@ -475,6 +483,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                        height: 43,
                        child: TextFormField(
                          controller: quantityCon,
+                         textAlign: TextAlign.center,
                          decoration: InputDecoration(
                            focusedBorder: OutlineInputBorder(
                              borderSide: BorderSide(color: Colors.green),),
@@ -527,6 +536,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
          });
    }
 
+  Future<void> share (String name, String desc) async{
+    await FlutterShare.share(
+      title: 'Hello',
+      text: "Title:- "+name,
+      linkUrl: "Description:- "+desc,
+    );
+  }
 
 
 

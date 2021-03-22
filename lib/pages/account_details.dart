@@ -19,12 +19,12 @@ class _AccountDetailsState extends State<AccountDetails> {
   fetchData() async{
     SharedPreferences perf = await SharedPreferences.getInstance();
     setState(() {
-      firstName = perf.getString("key1");
-      lastName = perf.getString("key2");
-      email = perf.getString("key3");
-      phoneNo = perf.getString("key5");
-      dob = perf.getString("key6");
-      profilePic = perf.getString("key7");
+      firstName = perf.getString("firstName");
+      lastName = perf.getString("lastName");
+      email = perf.getString("email");
+      phoneNo = perf.getString("phoneNo");
+      dob = perf.getString("dob");
+      profilePic = perf.getString("profilePic");
     });
     print("Image url $profilePic ");
 
@@ -49,9 +49,6 @@ class _AccountDetailsState extends State<AccountDetails> {
           Navigator.pop(context);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageScreen()));
         },),
-        actions: [
-          Icon(Icons.search,color: Colors.white,size: 30.0,)
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(

@@ -4,6 +4,7 @@ import 'package:neostore/Bloc/login_bloc.dart';
 import 'package:neostore/Pages/account_details.dart';
 import 'package:neostore/Pages/loginPage.dart';
 import 'package:neostore/pages/my_cart_page.dart';
+import 'package:neostore/pages/my_order_page.dart';
 import 'package:neostore/pages/table_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
@@ -34,10 +35,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
   getData() async{
     SharedPreferences perf =  await SharedPreferences.getInstance();
     setState(() {
-      firstName= perf.getString("key1");
-      lastName= perf.getString("key2");
-      email= perf.getString("key3");
-      profilePic = perf.getString("key7");
+      firstName= perf.getString("firstName");
+      lastName= perf.getString("lastName");
+      email= perf.getString("email");
+      profilePic = perf.getString("profilePic");
     });
   }
 
@@ -274,6 +275,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
             ListTile(
               title: Text("My Orders",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
               leading: Icon(Icons.list,color: Colors.white,size: 28.0,),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyOrderPage()));
+              },
             ),
             Divider(thickness: 1.0,),
             ListTile(
