@@ -102,12 +102,15 @@ class _MyCartPageState extends State<MyCartPage> {
                                           onPressed:(){
                                             deleteCartObj.deleteCart(cartList[index].productId.toString(), accessToken);
                                             cartList.clear();
+                                            Future.delayed(Duration(seconds: 1), (){
+                                              myCartObj.getCart(accessToken);
+                                            });
                                           }),
                                     ),
                                   ),
                                 ],
                                 child: Container(
-                                  height: 90.0,
+                                  height: 100.0,
                                   child: Padding(
                                     padding: const EdgeInsets.only(top:10.0,bottom: 10.0),
                                     child: ListTile(
@@ -121,9 +124,9 @@ class _MyCartPageState extends State<MyCartPage> {
                                       subtitle: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          SizedBox(height: 3.0,),
+                                          SizedBox(height: 5.0,),
                                           Text("(${cartList[index].product.productCategory})"),
-                                          SizedBox(height: 3.0,),
+                                          SizedBox(height: 5.0,),
                                           Container(
                                             height: 20.0,width: 40.0,
                                             decoration: BoxDecoration(
@@ -158,6 +161,10 @@ class _MyCartPageState extends State<MyCartPage> {
                                                 ],
                                                 onChanged: (val) {
                                                   editCartObj.editCart(val, cartList[index].productId.toString(), accessToken);
+                                                  cartList.clear();
+                                                  Future.delayed(Duration(milliseconds: 500), (){
+                                                    myCartObj.getCart(accessToken);
+                                                  });
                                                 },
                                               ),
                                             ),
@@ -171,15 +178,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                                       toastLength: Toast.LENGTH_SHORT,
                                                       gravity: ToastGravity.BOTTOM,
                                                       backgroundColor: Colors.white,
-                                                      textColor: Colors.black
+                                                      textColor: Colors.black,
                                                   );
-                                                  if(deleteCartObj.responseStatus == 200){
-                                                    Future.delayed(Duration(seconds: 1), (){
-                                                      myCartObj.getCart(accessToken);
-                                                      // Navigator.pop(context);
-                                                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyCartPage()));
-                                                    });
-                                                  }
                                                 } return Container();
                                               }),
                                           StreamBuilder<EditCartModel>(
@@ -193,12 +193,13 @@ class _MyCartPageState extends State<MyCartPage> {
                                                       backgroundColor: Colors.white,
                                                       textColor: Colors.black
                                                   );
-                                                  if(editCartObj.responseStatus == 200){
-                                                    Future.delayed(Duration(seconds: 1), (){
-                                                      Navigator.pop(context);
-                                                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyCartPage()));
-                                                    });
-                                                  }
+                                                  // if(editCartObj.responseStatus == 200){
+                                                  //  // myCartObj.getCart(accessToken);
+                                                  //   Future.delayed(Duration(seconds: 1), (){
+                                                  //     Navigator.pop(context);
+                                                  //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyCartPage()));
+                                                  //   });
+                                                  // }
                                                 } return Container();
                                               }),
                                         ],

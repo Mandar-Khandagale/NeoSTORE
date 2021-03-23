@@ -5,6 +5,7 @@ import 'package:neostore/Pages/account_details.dart';
 import 'package:neostore/Pages/loginPage.dart';
 import 'package:neostore/pages/my_cart_page.dart';
 import 'package:neostore/pages/my_order_page.dart';
+import 'package:neostore/pages/store_locator_page.dart';
 import 'package:neostore/pages/table_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
@@ -270,6 +271,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
             ListTile(
               title: Text("Store Locator",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
               leading: Icon(Icons.location_pin,color: Colors.white,size: 28.0,),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>StoreLocatorPage()));
+              },
             ),
             Divider(thickness: 1.0,),
             ListTile(

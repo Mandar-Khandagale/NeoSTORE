@@ -15,7 +15,6 @@ class _AccountDetailsState extends State<AccountDetails> {
   String firstName, lastName, email,phoneNo,dob,profilePic;
 
 
-
   fetchData() async{
     SharedPreferences perf = await SharedPreferences.getInstance();
     setState(() {
@@ -35,6 +34,7 @@ class _AccountDetailsState extends State<AccountDetails> {
       fetchData();
     super.initState();
   }
+  
   @override
   Widget build(BuildContext context) {
 

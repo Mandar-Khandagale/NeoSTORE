@@ -37,6 +37,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   int rate;
   var updatedRating;
   int responseStatus;
+  int position = 0;
 
   @override
   void dispose() {
@@ -160,7 +161,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                           height: 178,
                                           child: Image.network(image != null ? image : listImage,),
                                         ),
-                                        SizedBox(height: 6.0,),
+                                        SizedBox(height: 8.0,),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                                           child: SingleChildScrollView(
@@ -177,8 +178,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                      return Row(
                                                        children: [
                                                          InkWell(
-                                                           child: Image.network(imageList[index].image,),
-                                                         onTap: (){centerImage(imageList[index].image);},
+                                                           child: Container(
+                                                               child: Image.network(imageList[index].image,),
+                                                                 decoration: BoxDecoration(
+                                                                     border: Border.all(color: position == index ? Colors.red : Colors.black,width: 2.0 )
+                                                                 ),
+                                                           ),
+                                                         onTap: (){
+                                                             setState(() {
+                                                               position = index;
+                                                             });
+                                                             centerImage(imageList[index].image);
+                                                             },
                                                          ),
                                                          SizedBox(width: 10,),
                                                        ],
