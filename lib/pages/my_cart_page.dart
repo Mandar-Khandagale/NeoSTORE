@@ -36,7 +36,9 @@ class _MyCartPageState extends State<MyCartPage> {
 
   getToken() async {
     SharedPreferences perf = await SharedPreferences.getInstance();
+    setState(() {
       accessToken = perf.getString("accessToken");
+    });
       print("bbks:- $accessToken");
     myCartObj.getCart(accessToken);
   }
@@ -46,6 +48,10 @@ class _MyCartPageState extends State<MyCartPage> {
     editCartObj.dispose();
     deleteCartObj.dispose();
     super.dispose();
+  }
+
+  getRefresh() async{
+    getToken();
   }
 
   @override
@@ -59,7 +65,7 @@ class _MyCartPageState extends State<MyCartPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white,),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context,true);
           },
         ),
         actions: [
@@ -102,7 +108,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                           onPressed:(){
                                             deleteCartObj.deleteCart(cartList[index].productId.toString(), accessToken);
                                             cartList.clear();
-                                            Future.delayed(Duration(seconds: 1), (){
+                                            Future.delayed(Duration(milliseconds: 500), (){
                                               myCartObj.getCart(accessToken);
                                             });
                                           }),
@@ -128,7 +134,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                           Text("(${cartList[index].product.productCategory})"),
                                           SizedBox(height: 5.0,),
                                           Container(
-                                            height: 20.0,width: 40.0,
+                                            height: 23.0,width: 40.0,
                                             decoration: BoxDecoration(
                                                 color: grey,
                                                 shape: BoxShape.rectangle,
@@ -161,27 +167,14 @@ class _MyCartPageState extends State<MyCartPage> {
                                                 ],
                                                 onChanged: (val) {
                                                   editCartObj.editCart(val, cartList[index].productId.toString(), accessToken);
-                                                  cartList.clear();
+                                                  cartList.removeRange(0,cartList.length);
                                                   Future.delayed(Duration(milliseconds: 500), (){
-                                                    myCartObj.getCart(accessToken);
+                                                  myCartObj.getCart(accessToken);
                                                   });
                                                 },
                                               ),
                                             ),
                                           ),
-                                          StreamBuilder<EditCartModel>(
-                                              stream: deleteCartObj.deleteCartStream,
-                                              builder: (context, snapshot){
-                                                if(snapshot.data != null){
-                                                  Fluttertoast.showToast(
-                                                      msg: snapshot.data.userMsg,
-                                                      toastLength: Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.BOTTOM,
-                                                      backgroundColor: Colors.white,
-                                                      textColor: Colors.black,
-                                                  );
-                                                } return Container();
-                                              }),
                                           StreamBuilder<EditCartModel>(
                                               stream: editCartObj.editCartStream,
                                               builder: (context, snapshot){
@@ -193,13 +186,19 @@ class _MyCartPageState extends State<MyCartPage> {
                                                       backgroundColor: Colors.white,
                                                       textColor: Colors.black
                                                   );
-                                                  // if(editCartObj.responseStatus == 200){
-                                                  //  // myCartObj.getCart(accessToken);
-                                                  //   Future.delayed(Duration(seconds: 1), (){
-                                                  //     Navigator.pop(context);
-                                                  //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyCartPage()));
-                                                  //   });
-                                                  // }
+                                                } return Container();
+                                              }),
+                                          StreamBuilder<EditCartModel>(
+                                              stream: deleteCartObj.deleteCartStream,
+                                              builder: (context, snapshot){
+                                                if(snapshot.data != null){
+                                                    Fluttertoast.showToast(
+                                                      msg: snapshot.data.userMsg,
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      gravity: ToastGravity.BOTTOM,
+                                                      backgroundColor: Colors.white,
+                                                      textColor: Colors.black,
+                                                    );
                                                 } return Container();
                                               }),
                                         ],
@@ -242,7 +241,7 @@ class _MyCartPageState extends State<MyCartPage> {
                               borderRadius: BorderRadius.circular(10.0),
                               side: BorderSide(color: Colors.red)),
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AddAddressPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AddAddressPage())).then((value) => value ? getRefresh() : null);
                           },
                           color: Colors.red,
                           child: Text("ORDER NOW",style: TextStyle(fontSize: 25.0, color: Colors.white,fontWeight: FontWeight.w400)),

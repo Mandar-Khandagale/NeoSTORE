@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                              style: TextStyle(fontSize: 18.0, color: Colors.white),
                              recognizer: TapGestureRecognizer()
                                ..onTap = (){
-                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ForgetPass()));
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPass()));
                                }
                            ),
                          ),
@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 46.0,width: 46.0,
                         child: Center(child: IconButton(icon: Icon(Icons.add,size: 30.0,color: Colors.white,),
                         onPressed: (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegistrationPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>RegistrationPage()));
                         },
                         ),),
                       ),

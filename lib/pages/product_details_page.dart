@@ -38,6 +38,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   var updatedRating;
   int responseStatus;
   int position = 0;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -258,7 +259,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                               color: Colors.white,
                                             )),
                                       ),
-                                    ),
+                                    ) ,
                                     Container(
                                       width: 150.0,
                                       height: 55.0,
@@ -504,6 +505,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                        ),
                      ),
                      SizedBox(height: 22.0,),
+                     isLoading ==false ?
                      Container(
                        width: 198.0,
                        height: 47.0,
@@ -512,13 +514,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                              borderRadius: BorderRadius.circular(10.0),
                              side: BorderSide(color: Colors.white)),
                          onPressed: () {
+                           setState(() {
+                             isLoading = true;
+                           });
                            final String qua = quantityCon.text;
                            buyObj.buyNow(id, qua, accessToken);
                          },
                          color: Colors.red,
                          child: Text("SUBMIT", style: TextStyle(fontSize: 20.0, color: Colors.white,)),
                        ),
-                     ),
+                     ):CircularProgressIndicator(),
                      SizedBox(height: 10.0,),
                      StreamBuilder<String>(
                        stream: buyObj.buyNowStream,
@@ -532,6 +537,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                textColor: Colors.black
                            );
                            if(buyObj.responseStatus == 200){
+                               print("false");
+                               isLoading = false;
                              Future.delayed(Duration(seconds: 2), (){
                                Navigator.pop(context);
                              });

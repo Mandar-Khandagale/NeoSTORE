@@ -262,8 +262,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                          );
                          if(addAddressObj.responseStatus == 200){
                            Future.delayed(Duration(seconds: 2), (){
-                             Navigator.pop(context);
-                            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageScreen()));
+                             Navigator.pop(context,true);
                            });
                          }
                        }

@@ -51,7 +51,7 @@ class _ProductTableState extends State<ProductTable> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context,true);
           },
         ),
         actions: [

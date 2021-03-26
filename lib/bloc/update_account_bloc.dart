@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:neostore/model_class/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateAccountBloc{
   int responseStatus;
 
-  StreamController stateStreamController = StreamController<String>();
+  StreamController stateStreamController = StreamController<String>.broadcast();
   StreamSink<String> get updateAccountSink => stateStreamController.sink;
   Stream<String> get updateAccountStream => stateStreamController.stream;
 
@@ -25,7 +26,7 @@ class UpdateAccountBloc{
       'email' : mail,
       'phone_no' : phone,
       'dob' : dob,
-      'profile_pic' : "data:image/jpg;base64," + pic
+      'profile_pic' : pic
     },
       headers: {
         "access_token" : accessToken
@@ -37,6 +38,13 @@ class UpdateAccountBloc{
       responseStatus = response.statusCode;
       print('Update acc success ${response.statusCode}');
       print('Update acc success ${response.body}');
+      SharedPreferences perf = await SharedPreferences.getInstance();
+      perf.setString("firstName", success.data.firstName);
+      perf.setString("lastName", success.data.lastName);
+      perf.setString("email", success.data.email);
+      perf.setString("phoneNo", success.data.phoneNo);
+      perf.setString("dob", success.data.dob);
+      perf.setString("profilePic", success.data.profilePic);
       updateAccountSink.add(success.userMsg);
     }else if(response.statusCode == 401){
       responseStatus = response.statusCode;

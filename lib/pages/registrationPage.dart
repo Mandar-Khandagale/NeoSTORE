@@ -100,7 +100,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           backgroundColor: Colors.white,
                           textColor: Colors.black);
                       if(registerObj.responseStatus == 200){
-                        Future.delayed(Duration(seconds: 2), (){
+                        Future.delayed(Duration(seconds: 1), (){
                           Navigator.pop(context);
                         });
                       }

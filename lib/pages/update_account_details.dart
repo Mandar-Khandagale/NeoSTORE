@@ -1,15 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:core';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:neostore/Bloc/update_account_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../constants.dart';
-import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
-import 'loginPage.dart';
+import 'package:intl/intl.dart';
+import 'package:neostore/Bloc/update_account_bloc.dart';
+import 'package:neostore/bloc/account_details_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants.dart';
+
 
 class UpdateAccountDetails extends StatefulWidget {
   @override
@@ -27,6 +29,9 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
   String accessToken; String  base64Image,profilePic;
 
   final updateObj = UpdateAccountBloc();
+  final accountInfoObj = AccountDetailsBloc();
+
+  bool isLoading = false;
 
   File _image;
 
@@ -70,7 +75,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
         title: Text('Edit Profile',style: TextStyle(fontSize: 25.0),),
         centerTitle: true,
         leading: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
-          Navigator.pop(context);
+          Navigator.pop(context,true);
         },),
       ),
       body: SingleChildScrollView(
@@ -97,11 +102,15 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                                image: DecorationImage(image: _image != null ?  FileImage(File(_image.path))
-                                    : NetworkImage(profilePic != null ? profilePic :
-                                "https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png",),fit: BoxFit.fill
-                                ),
+                                // image: DecorationImage(image: _image != null ?  FileImage(File(_image.path))
+                                //     : NetworkImage(profilePic != null ? profilePic :
+                                // "https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png",),fit: BoxFit.fill,
+                                // ),
                               ),
+                              child: profilePic == null && _image == null ? Container(child: Center(
+                                  child: fName.text.isEmpty && lName.text.isEmpty ? Text("") : Text(fName.text[0]+lName.text[0] ,style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.bold),)),):
+                                  Container(decoration: BoxDecoration(color: Colors.white,shape: BoxShape.circle,
+                                  image: DecorationImage(image: _image !=null ? FileImage(File(_image.path)) : NetworkImage(profilePic),fit: BoxFit.fill)),),
                             ),
                           ),
                         ),
@@ -255,6 +264,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                         },
                       ),
                       SizedBox(height: 20.0,),
+                      isLoading == false ?
                       Container(
                         width: double.infinity,
                         height: 55.0,
@@ -265,12 +275,16 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                           onPressed: (){
                             print("Update:-$accessToken");
                             if(updateAccountKey.currentState.validate()){
+                              setState(() {
+                                isLoading = true;
+                              });
                              String firstN = fName.text; String lastN = lName.text; String email = emailAdd.text; String phone = phoneNo.text;
                              String date = dob.text;  String pic = base64Image;
                              if(pic == null){
-                               pic = "null";
+                               pic = "";
                                updateObj.updateAccount(firstN,lastN,email,phone,date,accessToken,pic);
                              }else{
+                               pic = "data:image/jpg;base64," + pic;
                                updateObj.updateAccount(firstN,lastN,email,phone,date,accessToken,pic);
                              }
                             }
@@ -278,7 +292,7 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                           color: Colors.white,
                           child: Text("SUBMIT",style: TextStyle(fontSize: 23.0, color: Colors.red,fontWeight: FontWeight.w400)),
                         ),
-                      ),
+                      ) : CircularProgressIndicator(),
                       SizedBox(height: 45,),
                       StreamBuilder<String>(
                           stream: updateObj.updateAccountStream,
@@ -292,9 +306,9 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                                   textColor: Colors.black
                               );
                               if(updateObj.responseStatus == 200){
-                                // print("Saurabh:-${snapshot.data.hashCode}");
-                                Future.delayed(Duration(seconds: 2), (){
-                                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                                isLoading = false;
+                                Future.delayed(Duration(milliseconds: 500), (){
+                                  Navigator.pop(context,true);
                                 });
                               }
                             }
