@@ -6,7 +6,7 @@ import 'package:neostore/model_class/user_model.dart';
 
 class ForgetBloc {
    int responseStatus ;
-  final stateStreamController = StreamController<String>();
+  final stateStreamController = StreamController<String>.broadcast();
   StreamSink<String> get stateSink => stateStreamController.sink;
   Stream<String>  get stateStream => stateStreamController.stream;
 

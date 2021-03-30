@@ -14,6 +14,8 @@ class _ProductTableState extends State<ProductTable> {
   ScrollController scrollController = ScrollController();
   int pageNumber = 1;
   List<ProductData> dataList = List();
+  List<ProductData> filterTables = List();
+  bool isSearching = false;
 
   @override
   void initState() {
@@ -27,6 +29,13 @@ class _ProductTableState extends State<ProductTable> {
     super.initState();
   }
 
+  void filterTableList(value){
+    setState(() {
+      print("hello");
+      filterTables = dataList.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
+    });
+  }
+
   @override
   void dispose() {
     tableListObj.dispose();
@@ -36,106 +45,128 @@ class _ProductTableState extends State<ProductTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        title: Text(
-          'Tables',
-          style: TextStyle(fontSize: 25.0),
-        ),
-        centerTitle: true,
-        backgroundColor: myRed1,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          centerTitle: true,
+          title: isSearching == false ? Text('Tables', style: TextStyle(fontSize: 25.0),) :
+          TextField(
+            onChanged: (value){
+              filterTableList(value);
+            },
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              icon: Icon(Icons.search,color: Colors.white,),
+            hintText: "Search Tables Here",hintStyle: TextStyle(color: Colors.white),
+            border: InputBorder.none,
+          ),),
+          backgroundColor: myRed1,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context,true);
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context,true);
-          },
-        ),
-        actions: [
-          Icon(
-            Icons.search,
-            color: Colors.white,
-            size: 30.0,
+          actions: [ isSearching == true ?
+          IconButton(
+              icon: Icon(Icons.cancel,size: 30.0,),
+              onPressed: (){
+                setState(() {
+                  isSearching = false;
+                  filterTables = dataList;
+                });
+              }
+          ) : IconButton(
+              icon: Icon(Icons.search,size: 30.0,),
+              onPressed: (){
+                setState(() {
+                  isSearching = true;
+                });
+              }
           )
-        ],
-      ),
-      body: Container(
-        child: StreamBuilder<ProductList>(
-            stream: tableListObj.tableListStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
+          ],
+        ),
+        body: Container(
+          child: StreamBuilder<ProductList>(
+              stream: tableListObj.tableListStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
                 dataList.addAll(snapshot.data.data);
-                return ListView.builder(
-                  controller: scrollController,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: dataList.length,
-                  itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            height: 100.0,
-                            child: ListTile(
-                              onTap:(){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id, name: dataList[index].name,
-                              listImage: dataList[index].productImages,)));
-                              },
-                              leading: Container(
-                                height: 66.0,
-                                width: 73.0,
-                                child: Image(image: NetworkImage(dataList[index].productImages),fit: BoxFit.fill,),
-                              ),
-                              title: Padding(
-                                padding: const EdgeInsets.only(top:8.0),
-                                child: Text(dataList[index].name,
-                                  style: TextStyle(
-                                    fontSize: 15.0,
+                filterTables.addAll(snapshot.data.data);
+                  return ListView.builder(
+                    controller: scrollController,
+                    physics: BouncingScrollPhysics(),
+                    itemCount: filterTables.length,
+                    itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Container(
+                              height: 100.0,
+                              child: ListTile(
+                                onTap:(){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailPage(id: dataList[index].id, name: dataList[index].name,
+                                listImage: dataList[index].productImages,)));
+                                },
+                                leading: Container(
+                                  height: 66.0,
+                                  width: 73.0,
+                                  child: Image(image: NetworkImage(filterTables[index].productImages),fit: BoxFit.fill,),
+                                ),
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top:8.0),
+                                  child: Text(filterTables[index].name,
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    dataList[index].producer,
-                                    style: TextStyle(fontSize: 10.0),
-                                  ),
-                                  SizedBox(height: 16.0,),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Rs." + dataList[index].cost.toString(),
-                                        style: TextStyle(fontSize: 20.0, color: Colors.red),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              trailing: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  productRating(dataList[index].rating),
-                                ],
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      filterTables[index].producer,
+                                      style: TextStyle(fontSize: 10.0),
+                                    ),
+                                    SizedBox(height: 16.0,),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("Rs." + filterTables[index].cost.toString(),
+                                          style: TextStyle(fontSize: 20.0, color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                trailing: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    productRating(filterTables[index].rating),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Divider(
-                            height: 2.0,
-                            thickness: 2.0,
-                          ),
-                        ],
-                      );
-                  },
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+                            Divider(
+                              height: 2.0,
+                              thickness: 2.0,
+                            ),
+                          ],
+                        );
+                    },
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ),
       ),
     );
   }
@@ -327,5 +358,9 @@ class _ProductTableState extends State<ProductTable> {
           );
         }
     }
+  }
+
+  Future<bool> _onWillPop() {
+  Navigator.pop(context, true);
   }
 }

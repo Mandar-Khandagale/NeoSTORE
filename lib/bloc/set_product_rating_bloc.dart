@@ -11,7 +11,7 @@ class SetProductRatingBloc {
   StreamSink<SetRating> get setRatingSink => stateStreamController.sink;
   Stream<SetRating> get setRatingStream => stateStreamController.stream;
 
-  setRating(int id,var rate) async {
+  setRating(int id,String rate) async {
     var requestUrl = "http://staging.php-dev.in:8844/trainingapp/api/products/setRating";
     var response = await http.post(requestUrl, body: {
       "product_id" : id.toString(),

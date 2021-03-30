@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:neostore/Pages/account_details.dart';
 import 'package:neostore/Pages/loginPage.dart';
 import 'package:neostore/bloc/my_cart_bloc.dart';
-import 'package:neostore/model_class/my_cart_model_class.dart';
 import 'package:neostore/pages/my_cart_page.dart';
 import 'package:neostore/pages/my_order_page.dart';
 import 'package:neostore/pages/store_locator_page.dart';
 import 'package:neostore/pages/table_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../constants.dart';
 
 
@@ -85,9 +83,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
         backgroundColor: myRed1,
         title: Text("NeoSTORE",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30.0),),
         centerTitle: true,
-        actions: [
-          Icon(Icons.search,color: Colors.white,size: 30.0,)
-        ],
+        // actions: [
+        //   Icon(Icons.search,color: Colors.white,size: 30.0,)
+        // ],
       ),
       drawer: Drawer(
         child: drawer(),

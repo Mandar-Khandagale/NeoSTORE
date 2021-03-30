@@ -21,6 +21,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool isValidateForm1 = false;
   bool showPass1 = true;
   bool showPass2 = true;
+  bool isLoading = false;
 
   final registerObj = RegisterBloc();
 
@@ -44,6 +45,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
+  progressIndicator(){
+    registerObj.registerStream.listen((value) {
+      if(value.isNotEmpty){
+        Fluttertoast.showToast(
+            msg: value,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.white,
+            textColor: Colors.black
+        );
+      }
+      if(registerObj.responseStatus == 200){
+        isLoading = false;
+        Future.delayed(Duration(seconds: 1), (){
+          Navigator.pop(context);
+        });
+      }else{
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +83,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         },),
         elevation: 0.0,
         backgroundColor: myRed1,
-        title: Text('Register'),
+        title: Text('Register',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30.0),),
         centerTitle: true,
       ),
       backgroundColor: Colors.red,
@@ -75,6 +100,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: Colors.white),),
               ),
               _form(),
+              isLoading == false ?
               SizedBox(
                 width: 293.0,
                 height: 47.0,
@@ -88,26 +114,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: Colors.white,
                     child: Text('REGISTER',
                       style: TextStyle(fontSize: 26.0, color: Colors.red),)),
-              ),
-              StreamBuilder<String>(
-                  stream: registerObj.registerStream,
-                  builder: (BuildContext context, snapshot ){
-                    if(snapshot.data != null){
-                      Fluttertoast.showToast(
-                          msg: snapshot.data,
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          backgroundColor: Colors.white,
-                          textColor: Colors.black);
-                      if(registerObj.responseStatus == 200){
-                        Future.delayed(Duration(seconds: 1), (){
-                          Navigator.pop(context);
-                        });
-                      }
-                    }
-                    return Container();
-                  }
-              ),
+              ) : CircularProgressIndicator(),
+              // StreamBuilder<String>(
+              //     stream: registerObj.registerStream,
+              //     builder: (BuildContext context, snapshot ){
+              //       if(snapshot.data != null){
+              //         Fluttertoast.showToast(
+              //             msg: snapshot.data,
+              //             toastLength: Toast.LENGTH_SHORT,
+              //             gravity: ToastGravity.BOTTOM,
+              //             backgroundColor: Colors.white,
+              //             textColor: Colors.black);
+              //         if(registerObj.responseStatus == 200){
+              //           Future.delayed(Duration(seconds: 1), (){
+              //             Navigator.pop(context);
+              //           });
+              //         }
+              //       }
+              //       return Container();
+              //     }
+              // ),
             ],
           ),
         ),
@@ -126,9 +152,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final String gen = gender;
     final String num = phone.text;
     if (_formKey.currentState.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       if (gender != null && status == true ) {
         registerObj.createUser(fname, lname, mail, pas, conpass, gen, num);
       }
+      progressIndicator();
     }
   }
 

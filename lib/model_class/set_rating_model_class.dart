@@ -32,7 +32,7 @@ class Data {
   String producer;
   String description;
   int cost;
-  double rating;
+  var rating;
   int viewCount;
   String created;
   String modified;

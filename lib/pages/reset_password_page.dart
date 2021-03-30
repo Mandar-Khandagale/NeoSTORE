@@ -21,6 +21,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   TextEditingController confirmPass = TextEditingController();
   final resetObj = ResetPasswordBloc();
   String accessToken;
+  bool isLoading = false;
 
 
   @override
@@ -166,6 +167,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       },
                     ),
                     SizedBox(height: 13,),
+                    isLoading == false ?
                     Container(
                       width: double.infinity,
                       height: 55.0,
@@ -176,6 +178,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         onPressed: () {
                           print("AccessToken:-$accessToken");
                           if(resetKey.currentState.validate()){
+                            setState(() {
+                              isLoading = true;
+                            });
                           final String currentPassword = currentPass.text;
                           final String newPassword = newPass.text;
                            final String confirmPassword = confirmPass.text;
@@ -185,7 +190,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         color: Colors.white,
                         child: Text("RESET PASSWORD",style: TextStyle(fontSize: 23.0, color: Colors.red,fontWeight: FontWeight.w400)),
                       ),
-                    ),
+                    ) : CircularProgressIndicator(),
                     StreamBuilder<String>(
                         stream: resetObj.resetPassStream,
                         builder: (BuildContext context, snapshot ){
@@ -198,8 +203,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                                 textColor: Colors.black
                             );
                             if(resetObj.responseStatus == 200){
-                              // print("Saurabh:-${snapshot.data.hashCode}");
-                              Future.delayed(Duration(seconds: 2), (){
+                              isLoading = false;
+                              Future.delayed(Duration(seconds: 1), (){
                                 Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
                               });
                             }

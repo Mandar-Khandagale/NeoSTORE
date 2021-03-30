@@ -20,6 +20,7 @@ class _ForgetPassState extends State<ForgetPass> {
   final forgetKey = GlobalKey<FormState>();
   TextEditingController forgetName = TextEditingController();
   final forgetObj = ForgetBloc();
+  bool isLoading = false;
 
 
   @override
@@ -28,7 +29,29 @@ class _ForgetPassState extends State<ForgetPass> {
     super.dispose();
   }
 
-
+  progressIndicator(){
+    forgetObj.stateStream.listen((value) {
+      if(value.isNotEmpty){
+        Fluttertoast.showToast(
+            msg: value,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.white,
+            textColor: Colors.black
+        );
+        if(forgetObj.responseStatus == 200){
+          isLoading = false;
+          Future.delayed(Duration(seconds: 1), (){
+            Navigator.pop(context);
+          });
+        }else{
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
+    });
+  }
 
 
   @override
@@ -80,6 +103,7 @@ class _ForgetPassState extends State<ForgetPass> {
                       },
                     ),
                     SizedBox(height: 26.0,),
+                    isLoading == false ?
                     SizedBox(
                       width: 293.0,
                       height: 47.0,
@@ -89,35 +113,39 @@ class _ForgetPassState extends State<ForgetPass> {
                               side: BorderSide(color: Colors.white)),
                           onPressed: () async {
                               if(forgetKey.currentState.validate()){
+                                setState(() {
+                                  isLoading = true;
+                                });
                                 final String email = forgetName.text;
                                 forgetObj.forgetPass(email);
+                                progressIndicator();
                               }
                           },
                           color: Colors.white,
                           child: Text('SUBMIT',
                             style: TextStyle(fontSize: 26.0, color: Colors.red),)),
-                    ),
-                    StreamBuilder<String>(
-                      stream: forgetObj.stateStream,
-                        builder: (BuildContext context, snapshot ){
-                      if(snapshot.data != null){
-                        Fluttertoast.showToast(
-                            msg: snapshot.data,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black
-                        );
-                        if(forgetObj.responseStatus == 200){
-                         // print("Saurabh:-${snapshot.data.hashCode}");
-                          Future.delayed(Duration(seconds: 2), (){
-                            Navigator.pop(context);
-                          });
-                        }
-                      }
-                        return Container();
-                        }
-                    ),
+                    ) : CircularProgressIndicator(),
+                    // StreamBuilder<String>(
+                    //   stream: forgetObj.stateStream,
+                    //     builder: (BuildContext context, snapshot ){
+                    //   if(snapshot.data != null){
+                    //     Fluttertoast.showToast(
+                    //         msg: snapshot.data,
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         backgroundColor: Colors.white,
+                    //         textColor: Colors.black
+                    //     );
+                    //     if(forgetObj.responseStatus == 200){
+                    //      // print("Saurabh:-${snapshot.data.hashCode}");
+                    //       Future.delayed(Duration(seconds: 2), (){
+                    //         Navigator.pop(context);
+                    //       });
+                    //     }
+                    //   }
+                    //     return Container();
+                    //     }
+                    // ),
                   ],
                 ),
               ),

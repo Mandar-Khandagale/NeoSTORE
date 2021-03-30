@@ -35,7 +35,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   final buyObj = BuyNowBloc();
   String image,accessToken;
   int rate;
-  var updatedRating;
+  String updatedRating;
   int responseStatus;
   int position = 0;
   bool isLoading = false;
@@ -423,6 +423,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       },),
                   ),
                   SizedBox(height: 33.0,),
+                  isLoading == false ?
                   Container(
                     width: double.infinity,
                     height: 55.0,
@@ -431,12 +432,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(color: Colors.white)),
                       onPressed: () {
-                        ratingObj.setRating(id,updatedRating);
+                        isLoading = true;
+                        if(updatedRating == null){
+                          updatedRating = rate.toString();
+                          ratingObj.setRating(id,updatedRating);
+                        }else{
+                          ratingObj.setRating(id,updatedRating);
+                        }
                       },
                       color: Colors.red,
                       child: Text("RATE NOW", style: TextStyle(fontSize: 20.0, color: Colors.white,)),
                     ),
-                  ),
+                  ) : CircularProgressIndicator(),
                   SizedBox(height: 22.0,),
                   StreamBuilder<SetRating>(
                     stream: ratingObj.setRatingStream,
@@ -450,6 +457,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             textColor: Colors.black
                         );
                         if(ratingObj.responseStatus == 200){
+                          isLoading = false;
                           Future.delayed(Duration(seconds: 2), (){
                             Navigator.pop(context);
                           });

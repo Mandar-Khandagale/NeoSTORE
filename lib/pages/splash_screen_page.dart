@@ -17,7 +17,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     setState(() {
       getUserData().whenComplete(() async {
-        Timer(Duration(seconds: 1), ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> finalEmail == null ? LoginPage() : HomePageScreen())));
+        Timer(Duration(seconds: 1), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> finalEmail == null ? LoginPage() : HomePageScreen())));
       });
     });
     super.initState();

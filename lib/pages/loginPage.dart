@@ -24,11 +24,36 @@ class _LoginPageState extends State<LoginPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _loginKey = GlobalKey<FormState>();
   bool showPass = true;
-  bool state = false;
+  bool isLoading = false;
   TextEditingController passUser = TextEditingController();
   TextEditingController userName = TextEditingController();
 
   final loginObj = LoginBloc();
+
+  progressState(){
+    loginObj.loginStream.listen((event) {
+      if(event.isNotEmpty){
+        Fluttertoast.showToast(
+            msg: event,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.white,
+            textColor: Colors.black);
+      }
+      if(loginObj.responseStatus == 200){
+        isLoading = false;
+        Future.delayed(Duration(milliseconds: 500), () {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePageScreen()));
+        });
+      }else{
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+
+  }
+
 
   @override
   void dispose() {
@@ -134,6 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                            },
                          ),
                          SizedBox(height: 26.0,),
+                         isLoading == false ?
                          SizedBox(
                            width: 293.33,
                            height: 47.33,
@@ -148,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                                child: Text('LOGIN',
                                  style: TextStyle(fontSize: 26.0, color: Colors.red),)
                            ),
-                         ),
+                         ) : CircularProgressIndicator(),
                          SizedBox(height: 21.0,),
                          RichText(
                            text: TextSpan(
@@ -184,25 +210,26 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                StreamBuilder<String>(
-                    stream: loginObj.loginStream,
-                    builder: (BuildContext context, snapshot ){
-                      if(snapshot.data != null){
-                        Fluttertoast.showToast(
-                            msg: snapshot.data,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black);
-                        if(loginObj.responseStatus == 200){
-                          Future.delayed(Duration(seconds: 2), (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageScreen()));
-                          });
-                        }
-                      }
-                      return Container();
-                    }
-                ),
+                // StreamBuilder<String>(
+                //     stream: loginObj.loginStream,
+                //     builder: (BuildContext context, snapshot ){
+                //       if(snapshot.data != null){
+                //         Fluttertoast.showToast(
+                //             msg: snapshot.data,
+                //             toastLength: Toast.LENGTH_SHORT,
+                //             gravity: ToastGravity.BOTTOM,
+                //             backgroundColor: Colors.white,
+                //             textColor: Colors.black);
+                //         if(loginObj.responseStatus == 200) {
+                //           isLoading = false;
+                //           Future.delayed(Duration(seconds: 1), () {
+                //             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageScreen()));
+                //           });
+                //         }
+                //       }
+                //       return Container();
+                //     }
+                // ),
               ],
             ),
           ),
@@ -213,8 +240,12 @@ class _LoginPageState extends State<LoginPage> {
 
   login() async {
     if(_loginKey.currentState.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       final String user = userName.text; final String pass = passUser.text;
       loginObj.userValidate(user, pass);
+      progressState();
       }
   }
 

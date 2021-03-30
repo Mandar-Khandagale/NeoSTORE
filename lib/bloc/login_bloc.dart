@@ -8,7 +8,7 @@ class LoginBloc {
 
    int responseStatus;
 
-  final stateStreamController = StreamController<String>();
+  final stateStreamController = StreamController<String>.broadcast();
   StreamSink<String> get loginSink => stateStreamController.sink;
   Stream<String> get loginStream => stateStreamController.stream;
 

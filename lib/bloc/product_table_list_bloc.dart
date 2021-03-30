@@ -9,7 +9,7 @@ import 'package:neostore/model_class/product_list_model_class.dart';
 class TableListBloc{
 
 
-  final stateStreamController = StreamController<ProductList>();
+  final stateStreamController = StreamController<ProductList>.broadcast();
   StreamSink<ProductList> get tableListSink => stateStreamController.sink;
   Stream<ProductList> get tableListStream => stateStreamController.stream;
 
