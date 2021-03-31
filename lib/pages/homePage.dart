@@ -44,6 +44,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       accessToken = perf.getString("accessToken");
     });
     print("adbadb:- $accessToken");
+    /// Stream Listener
     drawerObj.myCartStream.listen((myCart) {
       if(myCart.data != null){
         setState(() {
@@ -139,7 +140,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.deck,size: 85.0,color: Colors.white,),
+                                    Image.asset('assets/table.png',fit: BoxFit.fill,),
                                   //  Image.asset("assets/ic_table.png",width: 95.0,height: 95.0,fit: BoxFit.fill,)
                                   ],
                                 ),
@@ -158,7 +159,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(Icons.weekend,size: 85.0,color: Colors.white,),
+                                 Image.asset('assets/sofa.png',fit: BoxFit.fill,),
                                 ],
                               ),
                               Row(
@@ -188,7 +189,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(Icons.event_seat,size: 85.0,color: Colors.white,),
+                                  Image.asset('assets/chair.png',fit: BoxFit.fill,),
                                 ],
                               ),
                             ],
@@ -205,7 +206,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.table_rows,size: 85.0,color: Colors.white,),
+                                    Image.asset('assets/cupboard.png',fit: BoxFit.fill,),
                                   ],
                                 ),
                                 Row(
@@ -280,7 +281,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 Divider(thickness: 1.0,),
                 ListTile(
                   title: Text("Tables",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
-                  leading: Icon(Icons.deck,color: Colors.white,size: 28.0,),
+                  leading:  Container(width: 28.0,height: 28.0,
+                      child: Image.asset('assets/table.png')),
                   onTap:(){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductTable())).then((value) => value ? getRefresh() : null);
                     },
@@ -288,16 +290,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 Divider(thickness: 1.0,),
                 ListTile(
                   title: Text("Sofa",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
-                  leading: Icon(Icons.weekend,color: Colors.white,size: 28.0,),
+                  leading:Container(width: 28.0,height: 28.0,
+                      child: Image.asset('assets/sofa.png')),
                 ),
                 Divider(thickness: 1.0,),    ListTile(
                   title: Text("Chair",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
-                leading: Icon(Icons.event_seat,color: Colors.white,size: 28.0,),
+                leading: Container(width: 28.0,height: 28.0,
+                    child: Image.asset('assets/chair.png')),
                 ),
                 Divider(thickness: 1.0,),
                 ListTile(
                   title: Text("Cupboards",style: TextStyle(fontSize: 20.0,color: Colors.white,fontWeight: FontWeight.w500),),
-                  leading: Icon(Icons.table_rows,color: Colors.white,size: 28.0,),
+                  leading: Container(width: 28.0,height: 28.0,
+                      child: Image.asset('assets/cupboard.png')),
                 ),
                 Divider(thickness: 1.0,),
                 ListTile(

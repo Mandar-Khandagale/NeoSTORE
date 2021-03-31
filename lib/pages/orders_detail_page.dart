@@ -58,9 +58,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          Icon(Icons.search, color: Colors.white, size: 30.0,)
-        ],
       ),
       body: Container(
         child: StreamBuilder<OrderDetailsModel>(

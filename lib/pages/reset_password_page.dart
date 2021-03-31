@@ -199,8 +199,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                                 msg: snapshot.data,
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.white,
-                                textColor: Colors.black
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white
                             );
                             if(resetObj.responseStatus == 200){
                               isLoading = false;

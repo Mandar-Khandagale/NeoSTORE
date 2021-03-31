@@ -31,14 +31,15 @@ class _LoginPageState extends State<LoginPage> {
   final loginObj = LoginBloc();
 
   progressState(){
+    ///Stream Listener
     loginObj.loginStream.listen((event) {
       if(event.isNotEmpty){
         Fluttertoast.showToast(
             msg: event,
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.white,
-            textColor: Colors.black);
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
       }
       if(loginObj.responseStatus == 200){
         isLoading = false;

@@ -453,8 +453,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             msg: snapshot.data.userMsg,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white
                         );
                         if(ratingObj.responseStatus == 200){
                           isLoading = false;
@@ -541,8 +541,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                msg: snapshot.data,
                                toastLength: Toast.LENGTH_SHORT,
                                gravity: ToastGravity.BOTTOM,
-                               backgroundColor: Colors.white,
-                               textColor: Colors.black
+                               backgroundColor: Colors.red,
+                               textColor: Colors.white
                            );
                            if(buyObj.responseStatus == 200){
                                print("false");

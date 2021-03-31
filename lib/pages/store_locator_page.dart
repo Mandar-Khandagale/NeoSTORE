@@ -92,9 +92,6 @@ class _StoreLocatorPageState extends State<StoreLocatorPage> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          Icon(Icons.search, color: Colors.white, size: 30.0,)
-        ],
       ),
       body: Column(
         children: [

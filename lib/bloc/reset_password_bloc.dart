@@ -6,7 +6,7 @@ import 'package:neostore/model_class/user_model.dart';
 class ResetPasswordBloc{
   int responseStatus;
 
-  StreamController stateStreamController = StreamController<String>();
+  StreamController stateStreamController = StreamController<String>.broadcast();
   StreamSink<String> get resetPassSink => stateStreamController.sink;
   Stream<String> get resetPassStream => stateStreamController.stream;
 

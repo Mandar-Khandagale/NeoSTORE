@@ -7,7 +7,7 @@ class AddAddressBloc{
 
   int responseStatus;
 
-  StreamController stateStreamController = StreamController<SuccessModel>();
+  StreamController stateStreamController = StreamController<SuccessModel>.broadcast();
   StreamSink<SuccessModel> get addAddressSink => stateStreamController.sink;
   Stream<SuccessModel> get addAddressStream => stateStreamController.stream;
 

@@ -7,7 +7,7 @@ class RegisterBloc {
 
   int responseStatus ;
 
-  final stateStreamController = StreamController<String>();
+  final stateStreamController = StreamController<String>.broadcast();
   StreamSink<String> get registerSink => stateStreamController.sink;
   Stream<String> get registerStream => stateStreamController.stream;
 

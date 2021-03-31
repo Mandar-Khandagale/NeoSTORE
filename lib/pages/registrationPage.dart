@@ -46,14 +46,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   progressIndicator(){
+    ///Stream Listener
     registerObj.registerStream.listen((value) {
       if(value.isNotEmpty){
         Fluttertoast.showToast(
             msg: value,
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.white,
-            textColor: Colors.black
+            backgroundColor: Colors.red,
+            textColor: Colors.white
         );
       }
       if(registerObj.responseStatus == 200){
@@ -83,7 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         },),
         elevation: 0.0,
         backgroundColor: myRed1,
-        title: Text('Register',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30.0),),
+        title: Text('Register',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25.0),),
         centerTitle: true,
       ),
       backgroundColor: Colors.red,

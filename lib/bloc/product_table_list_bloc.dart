@@ -8,6 +8,7 @@ import 'package:neostore/model_class/product_list_model_class.dart';
 
 class TableListBloc{
 
+  int responseStatus;
 
   final stateStreamController = StreamController<ProductList>.broadcast();
   StreamSink<ProductList> get tableListSink => stateStreamController.sink;
@@ -27,6 +28,11 @@ class TableListBloc{
       var jsonData = response.body;
       print("tablelist:- ${response.body}");
       if(response.statusCode == 200){
+        responseStatus = response.statusCode;
+        ProductList productList = ProductList.fromJson(jsonDecode(jsonData));
+        tableListSink.add(productList);
+      }else{
+        responseStatus = response.statusCode;
         ProductList productList = ProductList.fromJson(jsonDecode(jsonData));
         tableListSink.add(productList);
       }

@@ -70,9 +70,6 @@ class _MyCartPageState extends State<MyCartPage> {
               Navigator.pop(context,true);
             },
           ),
-          actions: [
-            Icon(Icons.search, color: Colors.white, size: 30.0,)
-          ],
         ),
         body: StreamBuilder<MyCartModel>(
           stream: myCartObj.myCartStream,
@@ -80,7 +77,6 @@ class _MyCartPageState extends State<MyCartPage> {
             if(snapshot.hasData){
               if(snapshot.data.data == null){
                 return Center(child:  Image(image: NetworkImage("https://professionalscareer.com/assets/images/emptycart.png")),
-                  //Text(snapshot.data.userMsg,style: TextStyle(fontSize: 30.0,)),
                );
               }
               else{
@@ -146,6 +142,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                                 padding: const EdgeInsets.all(2.0),
                                                 child:
                                                 DropdownButton<String>(
+                                                  underline: SizedBox(),
                                                   value: cartList[index].quantity.toString(),
                                                   icon: Icon(Icons.keyboard_arrow_down),
                                                   hint: Text(cartList[index].quantity.toString()),
@@ -185,8 +182,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                                         msg: snapshot.data.userMsg,
                                                         toastLength: Toast.LENGTH_SHORT,
                                                         gravity: ToastGravity.BOTTOM,
-                                                        backgroundColor: Colors.white,
-                                                        textColor: Colors.black
+                                                        backgroundColor: Colors.red,
+                                                        textColor: Colors.white
                                                     );
                                                   } return Container();
                                                 }),
@@ -198,8 +195,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                                         msg: snapshot.data.userMsg,
                                                         toastLength: Toast.LENGTH_SHORT,
                                                         gravity: ToastGravity.BOTTOM,
-                                                        backgroundColor: Colors.white,
-                                                        textColor: Colors.black,
+                                                        backgroundColor: Colors.red,
+                                                        textColor: Colors.white,
                                                       );
                                                   } return Container();
                                                 }),

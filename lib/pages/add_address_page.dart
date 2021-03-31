@@ -263,8 +263,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                msg: snapshot.data.userMsg,
                                toastLength: Toast.LENGTH_SHORT,
                                gravity: ToastGravity.BOTTOM,
-                               backgroundColor: Colors.white,
-                               textColor: Colors.black
+                               backgroundColor: Colors.red,
+                               textColor: Colors.white
                            );
                            if(addAddressObj.responseStatus == 200){
                              isLoading = false;

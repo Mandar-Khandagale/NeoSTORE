@@ -30,14 +30,15 @@ class _ForgetPassState extends State<ForgetPass> {
   }
 
   progressIndicator(){
+    ///Stream Listener
     forgetObj.stateStream.listen((value) {
       if(value.isNotEmpty){
         Fluttertoast.showToast(
             msg: value,
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.white,
-            textColor: Colors.black
+            backgroundColor: Colors.red,
+            textColor: Colors.white
         );
         if(forgetObj.responseStatus == 200){
           isLoading = false;

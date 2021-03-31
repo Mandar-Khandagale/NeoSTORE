@@ -304,8 +304,8 @@ class _UpdateAccountDetailsState extends State<UpdateAccountDetails> {
                                     msg: snapshot.data,
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white
                                 );
                                 if(updateObj.responseStatus == 200){
                                   isLoading = false;
