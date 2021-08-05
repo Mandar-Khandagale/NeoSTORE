@@ -10,7 +10,7 @@ class UpdateAccountBloc{
   StreamController stateStreamController = StreamController<String>.broadcast();
   StreamSink<String> get updateAccountSink => stateStreamController.sink;
   Stream<String> get updateAccountStream => stateStreamController.stream;
-
+// manabdabd
   updateAccount(String firstN,String lastN,String mail,String phone,String dob,String accessToken,String pic) async {
     print("Date:-$dob");
     print("first:-$firstN");

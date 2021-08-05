@@ -1,5 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:neostore/Pages/account_details.dart';
 import 'package:neostore/Pages/loginPage.dart';
 import 'package:neostore/bloc/my_cart_bloc.dart';
@@ -74,6 +75,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     var size = MediaQuery.of(context).size;
     final double itemHeight = size.height-kToolbarHeight-kBottomNavigationBarHeight;
 
@@ -111,6 +113,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             SizedBox(height: 13.0,),
             Expanded(
               child: Container(
+                height: itemHeight * 0.6,
                 child: GridView(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

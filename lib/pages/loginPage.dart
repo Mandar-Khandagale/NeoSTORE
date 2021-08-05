@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     print("------Login widget tree------");
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.red,
